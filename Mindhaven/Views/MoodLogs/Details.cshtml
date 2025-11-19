@@ -1,0 +1,58 @@
+﻿@model Mindhaven.Models.MoodLog
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MoodLog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MoodLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoodLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoodNote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoodNote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoodTag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoodTag)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoggedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoggedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FullName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MoodID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

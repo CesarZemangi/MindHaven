@@ -1,0 +1,44 @@
+﻿@model Mindhaven.Models.UserSetting
+
+@{
+    ViewBag.Title = "User Settings";
+}
+
+<h2>User Settings</h2>
+
+@if (Model != null)
+{
+    <form method="post" action="@Url.Action("Update", "UserSettings")">
+        @Html.AntiForgeryToken()
+
+        <div>
+            <label>
+                <input type="checkbox" name="ShowNotifications" value="true" @(Model.ShowNotifications.GetValueOrDefault() ? "checked" : "") /> Show Notifications
+            </label>
+        </div>
+
+        <div>
+            <label>
+                <input type="checkbox" name="EnableChat" value="true" @(Model.EnableChat.GetValueOrDefault() ? "checked" : "") /> Enable Chat
+            </label>
+        </div>
+
+        <div>
+            <label>
+                <input type="checkbox" name="ShowHistory" value="true" @(Model.ShowHistory.GetValueOrDefault() ? "checked" : "") /> Show History
+            </label>
+        </div>
+
+        <div>
+            <label>
+                <input type="checkbox" name="OfflineStatus" value="true" @(Model.OfflineStatus.GetValueOrDefault() ? "checked" : "") /> Offline Status
+            </label>
+        </div>
+
+        <button type="submit">Save Settings</button>
+    </form>
+}
+else
+{
+    <p>No settings found for your account.</p>
+}

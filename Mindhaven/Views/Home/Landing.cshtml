@@ -1,0 +1,240 @@
+﻿@model Mindhaven.ViewModels.LandingViewModel
+
+@{
+    ViewBag.Title = "Mindhaven Landing Page";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    :root {
+        --primary-color: #4a90e2;
+        --secondary-color: #f5f7fa;
+        --accent-color: #50e3c2;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: var(--secondary-color);
+        color: #333;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    h2 {
+        color: var(--primary-color);
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .hero {
+        background: var(--primary-color);
+        color: #fff;
+        text-align: center;
+        padding: 80px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero img {
+        max-width: 300px;
+        margin-top: 20px;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @@keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+
+    .card, .announcement-card, .case-card, .resource-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 30px;
+    }
+
+    .card:hover, .announcement-card:hover, .case-card:hover, .resource-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+    }
+
+    .resource-card a {
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+
+    @@media (max-width: 768px) {
+        .hero img { max-width: 200px; }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Mindhaven: Support for Your Mental Health</h1>
+        <p>Explore articles, tips, and resources to boost your wellbeing.</p>
+        <a href="#articles" class="btn btn-primary m-2">Read Articles</a>
+        <a href="#resources" class="btn btn-light m-2">Explore Resources</a>
+        <a href="#newsletter" class="btn btn-light m-2">Subscribe for Updates</a>
+        <img src="~/Content/images/hero-illustration.png" alt="Mental Wellness" />
+    </div>
+</section>
+
+<!-- Latest Articles -->
+<section id="articles">
+    <div class="container">
+        <h2>Latest Articles</h2>
+        <div class="row">
+            @foreach (var article in Model.LatestArticles)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        @if (!string.IsNullOrEmpty(article.ImageUrl))
+                        {
+                            <img class="card-img-top" src="@article.ImageUrl" alt="@article.Title" />
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@article.Title</h5>
+                            <p class="card-text">@article.Summary</p>
+                            <a href="@Url.Action("Details", "Articles", new { id = article.ArticleId })" class="btn btn-primary btn-sm">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Announcements -->
+<section id="announcements">
+    <div class="container">
+        <h2>Announcements & New Features</h2>
+        <div class="row">
+            @foreach (var item in Model.Announcements)
+            {
+                <div class="col-md-6">
+                    <div class="announcement-card card p-3">
+                        <h5>@item.Title</h5>
+                        <p>@item.Description</p>
+                        <small class="text-muted">@item.Date?.ToShortDateString()</small>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Case Studies -->
+<section id="case-studies">
+    <div class="container">
+        <h2>Case Studies & Success Stories</h2>
+        <div class="row">
+            @foreach (var study in Model.CaseStudies)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="case-card card p-3">
+                        @if (!string.IsNullOrEmpty(study.ImageUrl))
+                        {
+                            <img class="card-img-top" src="@study.ImageUrl" alt="@study.Title" />
+                        }
+                        <h5>@study.Title</h5>
+                        <p>@study.Summary</p>
+                        <a href="@Url.Action("Details", "CaseStudies", new { id = study.CaseStudyId })" class="btn btn-primary btn-sm">Read More</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Newsroom / Media Mentions -->
+<section id="newsroom">
+    <div class="container">
+        <h2>Newsroom</h2>
+        <ul class="list-group list-group-flush">
+            @foreach (var media in Model.MediaMentions)
+            {
+                <li class="list-group-item">
+                    <a href="@media.SourceUrl" target="_blank">@media.Title</a> - @media.PublishedDate?.ToShortDateString()
+                </li>
+            }
+        </ul>
+    </div>
+</section>
+
+<!-- Resources Hub -->
+<section id="resources">
+    <div class="container">
+        <h2>Resources Hub</h2>
+        <div class="row">
+            @foreach (var resource in Model.Resources)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="resource-card card p-3">
+                        <h5>@resource.Title</h5>
+                        <p>@resource.Content</p>
+                        @if (!string.IsNullOrEmpty(resource.Link))
+                        {
+                            <a href="@resource.Link" target="_blank">View</a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section id="newsletter" class="bg-light text-center">
+    <div class="container">
+        <h2>Subscribe for Updates</h2>
+        <form method="post" action="@Url.Action("Subscribe", "Home")" class="row justify-content-center g-2">
+            @Html.AntiForgeryToken()
+            <div class="col-md-4">
+                <input type="email" name="Email" class="form-control" placeholder="Your Email" required />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Subscribe</button>
+            </div>
+        </form>
+        <p class="mt-2">Get a free mindfulness guide when you subscribe.</p>
+    </div>
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success text-center">
+            @TempData["Message"]
+        </div>
+    }
+
+
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(sec => sec.style.opacity = 0);
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transition = "opacity 1s ease-in-out";
+                    entry.target.style.opacity = 1;
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(sec => observer.observe(sec));
+    });
+</script>

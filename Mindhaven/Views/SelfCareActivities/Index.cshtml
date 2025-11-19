@@ -1,0 +1,56 @@
+﻿@model IEnumerable<dynamic>
+@{
+    ViewBag.Title = "Self-Care Activities";
+}
+
+<h2>Self-Care Activities</h2>
+
+<div>
+    <label>Progress:</label>
+    <div style="width: 100%; background-color: #ddd; height: 20px; border-radius: 5px;">
+        <div style="width:@ViewBag.Progress%; background-color: #4CAF50; height: 100%; border-radius: 5px;"></div>
+    </div>
+    <p>@ViewBag.Progress% completed</p>
+</div>
+
+<h3>Add Custom Activity</h3>
+<form method="post" action="@Url.Action("AddCustomActivity")">
+    <input type="text" name="title" placeholder="Title" required style="width: 30%;" />
+    <input type="text" name="description" placeholder="Description" style="width: 50%;" />
+    <button type="submit">Add</button>
+</form>
+
+<ul>
+    @foreach (var act in Model)
+    {
+        <li style="margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <h4>@act.Title (@act.ActivityType)</h4>
+            <p>@act.Description</p>
+            @if (!act.Completed)
+            {
+                <button class="complete-btn" data-id="@act.Id" data-custom="@act.IsCustom">Mark Complete</button>
+            }
+            else
+            {
+                <span style="color: green; font-weight: bold;">Completed</span>
+            }
+        </li>
+    }
+</ul>
+
+<script>
+document.querySelectorAll('.complete-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const id = this.dataset.id;
+        const isCustom = this.dataset.custom === 'True';
+        fetch('@Url.Action("CompleteActivity", "SelfCareActivities")', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ id: id, isCustom: isCustom, notes: '' })
+        }).then(res => res.json())
+          .then(data => {
+              if (data.success) location.reload();
+          });
+    });
+});
+</script>

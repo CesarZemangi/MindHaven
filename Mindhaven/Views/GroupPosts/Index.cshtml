@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Mindhaven.Models.GroupPost>
+
+@{
+    ViewBag.Title = "Index";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
+}
+
+<h2>Index</h2>
+<a href="/Support/HelpNow" class="btn btn-danger btn-sm float-right">
+    🆘 Need Help? Talk to Someone Now
+</a>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PostContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SupportGroup.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupportGroup.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                @if (isAdmin)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PostID })@:
+                    @Html.ActionLink("Details", "Details", new { id = item.PostID })@:
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PostID })
+
+                }
+                else
+                { @Html.ActionLink("Details", "Details", new { id = item.PostID })@:
+
+
+                @Html.ActionLink("Request Delete", "RequestDeletes", "DeleteRequests", new { itemType = "GroupPost", itemId = item.PostID }, new { @class = "btn btn-warning btn-sm" })}
+            </td>
+        </tr>
+    }
+
+</table>

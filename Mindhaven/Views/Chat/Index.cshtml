@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "MindHaven Chatbot";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow-sm" style="width:100%; max-width:600px; margin:auto; border-radius:12px; background-color:#001f3f; color:white;">
+    <div class="card-header text-white text-center" style="background-color:#003366;">
+        <h5>💬 MindHaven Chatbot</h5>
+    </div>
+
+    <div id="chatBox" class="card-body" style="height:400px; overflow-y:auto; background-color:#002a5c; border-bottom:1px solid #ddd;">
+    </div>
+
+    <div class="card-footer d-flex" style="background-color:#001f3f;">
+        <input type="text" id="userInput" class="form-control me-2" placeholder="Type your message..." style="background-color:#003366; color:white; border:none;" />
+        <button class="btn btn-light" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function append(role, text) {
+    const div = document.createElement('div');
+    div.className = role;
+    div.style.margin = "8px 0";
+    div.innerHTML = (role === 'user' ? '<b>You:</b> ' : '<b>MindHaven:</b> ') + text;
+    document.getElementById('chatBox').appendChild(div);
+    document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight;
+}
+
+function sendMessage() {
+    const msg = $('#userInput').val().trim();
+    if (!msg) return;
+    append('user', msg);
+    $('#userInput').val('');
+    $.ajax({
+        url: '@Url.Action("Send", "Chat")',
+        type: 'POST',
+        data: { message: msg },
+        success: function(res) {
+            append('bot', res.reply);
+        },
+        error: function() {
+            append('bot', '⚠️ Server error. Please try again.');
+        }
+    });
+}
+
+$('#userInput').keypress(function(e) {
+    if (e.which === 13) sendMessage();
+});
+</script>

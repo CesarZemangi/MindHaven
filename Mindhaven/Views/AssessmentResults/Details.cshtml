@@ -1,0 +1,50 @@
+﻿@model Mindhaven.Models.AssessmentResult
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AssessmentResult</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Score)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Score)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TakenAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TakenAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Assessment.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Assessment.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FullName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ResultID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

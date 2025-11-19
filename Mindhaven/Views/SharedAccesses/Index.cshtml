@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Mindhaven.Models.SharedAccess>
+@{
+    ViewBag.Title = "Manage Care Team";
+}
+<h2>Your Care Team</h2>
+<p>@Html.ActionLink("Add Member", "Add", null, new { @class = "btn btn-primary" })</p>
+
+<table class="table">
+    <tr><th>Name</th><th>Action</th></tr>
+    @foreach (var member in Model)
+    {
+        <tr>
+            <td>@member.CareTeamMember.FullName</td>
+            <td>
+                @using (Html.BeginForm("Remove", "SharedAccess", new { id = member.AccessId }, FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                }
+            </td>
+        </tr>
+    }
+</table>

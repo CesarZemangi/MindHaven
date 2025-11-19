@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="559481b29595444d8dd1acdd6bb4c610" Name="Diagram1">
+        <EntityTypeShape EntityType="mindhavenDBModel.Announcement" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Appointment" Width="1.5" PointX="5.25" PointY="48.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Article" Width="1.5" PointX="3" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.AssessmentQuestion" Width="1.5" PointX="3" PointY="43.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.AssessmentResult" Width="1.5" PointX="3" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Assessment" Width="1.5" PointX="0.75" PointY="40" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.BadgeConfig" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.CaseStudy" Width="1.5" PointX="3" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.CustomActivity" Width="1.5" PointX="3" PointY="30.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.DeleteRequest" Width="1.5" PointX="3" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.EmergencyContact" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Feedback" Width="1.5" PointX="5.25" PointY="43.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.GroupPost" Width="1.5" PointX="6" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.HomeworkSubmission" Width="1.5" PointX="8.25" PointY="46.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.JournalEntry" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.MediaMention" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.MeditationDeleteRequest" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Meditation" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.MoodLog" Width="1.5" PointX="3" PointY="47.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.MoodReminder" Width="1.5" PointX="3" PointY="51.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Note" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Resource" Width="1.5" PointX="3" PointY="54.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Resource1" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.SelfCareActivity" Width="1.5" PointX="3.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.SharedAccess" Width="1.5" PointX="3" PointY="57.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Subscriber" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.SupportGroup" Width="1.5" PointX="3.75" PointY="40" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Tag" Width="1.5" PointX="5.25" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.TherapeuticHomework" Width="1.5" PointX="3" PointY="60.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.TherapistFeedback" Width="1.5" PointX="10.5" PointY="39.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Therapist" Width="1.5" PointX="3" PointY="65" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.UserAchievement" Width="1.5" PointX="3" PointY="68.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.UserActivity" Width="1.5" PointX="3" PointY="71" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.UserActivityLog" Width="1.5" PointX="6" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.User" Width="1.5" PointX="0.75" PointY="31.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="mindhavenDBModel.UserSetting" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Announcem__Autho__55F4C372" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Appointme__Thera__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Appointme__UserI__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Articles__Author__5224328E" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Assessmen__Asses__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Assessmen__Asses__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Assessmen__UserI__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__CaseStudi__Autho__59C55456" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_CustomActivity_User" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__DeleteReq__Reque__17F790F9" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Feedback__Therap__09746778" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Feedback__UserId__0A688BB1" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__GroupPost__Group__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__GroupPost__UserI__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_HomeworkSubmission_Homework" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_HomeworkSubmission_User" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_TherapistFeedback_Submission" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Meditatio__Medit__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__MoodLogs__UserID__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_MoodReminders_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Resource__Author__5E8A0973" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_UserActivityLog_Activity" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__SharedAcc__UserI__22401542" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_TherapeuticHomework_Therapist" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_TherapeuticHomework_User" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_TherapistFeedback_Therapist" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__Therapist__UserI__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_UserAchievement_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK__UserActiv__UserI__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.FK_UserActivityLog_User" ManuallyRouted="false" />
+        <AssociationConnector Association="mindhavenDBModel.ArticleTags" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="mindhavenDBModel.Achievement" Width="1.5" PointX="9.375" PointY="6.75" />
+        <AssociationConnector Association="mindhavenDBModel.FK_UserAchievement_Achievement" />
+        <AssociationConnector Association="mindhavenDBModel.FK_JournalEntries_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

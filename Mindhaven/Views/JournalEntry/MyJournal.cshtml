@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Mindhaven.Models.JournalEntry>
+
+@{
+    ViewBag.Title = "My Journal";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>My Journal</h2>
+        <a href="@Url.Action("Create", "JournalEntry")" class="btn btn-primary">Add New Entry</a>
+    </div>
+
+    @using (Html.BeginForm("MyJournal", "JournalEntry", FormMethod.Get))
+    {
+        <div class="form-inline mb-3">
+            <input type="text" name="search" placeholder="Search by title" class="form-control mr-2" />
+            <input type="date" name="date" class="form-control mr-2" />
+            <input type="submit" value="Filter" class="btn btn-secondary" />
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">You have no journal entries.</div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var entry in Model.OrderByDescending(e => e.CreatedDate))
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm p-3 h-100">
+                        <h5 class="text-primary">@entry.Title</h5>
+                        <small class="text-muted">@entry.CreatedDate.ToShortDateString()</small>
+                        <hr />
+                        <p style="max-height: 100px; overflow: hidden;">@Html.Raw(entry.Content)</p>
+                        <div class="mt-auto">
+                            <a href="@Url.Action("Details", "JournalEntry", new { id = entry.Id })" class="btn btn-sm btn-outline-info">View</a>
+                            <a href="@Url.Action("Edit", "JournalEntry", new { id = entry.Id })" class="btn btn-sm btn-outline-warning">Edit</a>
+                            <a href="@Url.Action("Delete", "JournalEntry", new { id = entry.Id })" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

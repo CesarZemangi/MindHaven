@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Mindhaven.Models.SupportGroup>
+
+@{
+    ViewBag.Title = "Index";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+}
+
+<h2>Index</h2>
+<a href="/Support/HelpNow" class="btn btn-danger btn-sm float-right">
+    🆘 Need Help? Talk to Someone Now
+</a>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @if (isAdmin)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.GroupID })@:
+                    @Html.ActionLink("Details", "Details", new { id = item.GroupID }) @:
+                    @Html.ActionLink("Delete", "Delete", new { id = item.GroupID })
+                }
+                else
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.GroupID }) @:
+
+
+                }
+            </td>
+        </tr>
+    }
+
+</table>

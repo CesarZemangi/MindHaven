@@ -1,0 +1,139 @@
+﻿@using Mindhaven.Models
+
+@model IEnumerable<Mindhaven.Models.MoodLog>
+
+
+@{
+    ViewBag.Title = "Mood Tracking Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Mood Tracking Dashboard</h2>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-info">@ViewBag.Message</div>
+    }
+    else
+    {
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm text-center">
+                    <h4>Average Mood</h4>
+                    <p class="display-6 text-primary">@Math.Round((double)ViewBag.AvgMood, 1)</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm text-center">
+                    <h4>Total Entries</h4>
+                    <p class="display-6 text-success">@ViewBag.TotalLogs</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm text-center">
+                    <h4>Last Recorded Mood</h4>
+                    <p class="display-6 text-info">@ViewBag.LastMood</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm p-4 mb-4">
+            <h4>Mood Trend Over Time</h4>
+            <div style="height:320px; width:100%; position:relative;">
+                <canvas id="moodTrendChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card shadow-sm p-4">
+            <h4>Recent Mood Logs</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Mood Level</th>
+                        <th>Note</th>
+                        <th>Tag</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderByDescending(m => m.LoggedAt).Take(10))
+                    {
+                        <tr>
+                            <td>@(item.LoggedAt.HasValue ? item.LoggedAt.Value.ToString("MMM dd, yyyy hh:mm tt") : "-")</td>
+                            <td>@item.MoodLevel</td>
+                            <td>@item.MoodNote</td>
+                            <td>@item.MoodTag</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        (function () {
+            // Safely read server-provided labels and data.
+            // ViewBag.Dates should be like:  'Jan 01','Jan 02'
+            // ViewBag.MoodLevels should be like: 1,2,3,4
+            var labels = [
+                @Html.Raw(ViewBag.Dates ?? "''")
+            ];
+            var dataPoints = [
+                @Html.Raw(ViewBag.MoodLevels ?? "0")
+            ];
+
+            var ctx = document.getElementById('moodTrendChart').getContext('2d');
+
+            // If there is no data, render a placeholder message inside the card
+            var hasData = dataPoints && dataPoints.length && dataPoints.length > 0 && !(dataPoints.length === 1 && dataPoints[0] === 0);
+            if (!hasData) {
+                ctx.font = "16px Arial";
+                ctx.fillText("No chart data available", 10, 50);
+                return;
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Mood Level',
+                        data: dataPoints,
+                        borderColor: 'rgba(54,162,235,1)',
+                        backgroundColor: 'rgba(54,162,235,0.15)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            suggestedMax: 10,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+}

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Mindhaven.Models.CustomActivity>
+
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    var role = Session["Role"] != null ? Session["Role"].ToString() : "";
+    bool isAdmin = role == "Admin";
+    bool isTherapist = role == "Therapist";
+    bool isUser = role == "User";
+}
+
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                @if (isAdmin || isTherapist)
+                {
+                    @: | @Html.ActionLink("Edit", "Edit", new { id = item.CustomId })
+                    @: | @Html.ActionLink("Delete", "Delete", new { id = item.CustomId })
+                }
+                else if (isUser)
+                {
+                    @: | @Html.ActionLink("Request Delete", "DeleteRequest", "DeleteRequests",
+              new { itemType = "CustomActivity", itemId = item.CustomId },
+              new { @class = "btn btn-warning btn-sm" })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

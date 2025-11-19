@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Mindhaven.Models.Therapist>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<a href="/Support/HelpNow" class="btn btn-danger btn-sm float-right">
+    🆘 Need Help? Talk to Someone Now
+</a>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Specialization)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailableSlots)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Specialization)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableSlots)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TherapistID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TherapistID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TherapistID })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Mindhaven.Models.UserAchievement>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BadgeType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateEarned)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Progress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BadgeType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateEarned)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Progress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FullName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AchievementId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AchievementId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AchievementId })
+        </td>
+    </tr>
+}
+
+</table>

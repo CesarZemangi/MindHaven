@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Mindhaven.Models.TherapeuticHomework>
+@{
+    ViewBag.Title = "Therapist Homework Dashboard";
+}
+
+<h2>Assigned Homework</h2>
+
+<p>@Html.ActionLink("Assign New Homework", "Create", "TherapeuticHomeworks", null, new { @class = "btn btn-success" })</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>User</th>
+            <th>Assigned</th>
+            <th>Due</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hw in Model)
+        {
+            <tr>
+                <td>@hw.Title</td>
+                <td>@hw.UserId</td>
+                <td>@(hw.AssignedDate.HasValue ? hw.AssignedDate.Value.ToShortDateString() : "Not set")</td>
+                <td>@hw.DueDate?.ToShortDateString()</td>
+                <td>@hw.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.RecentFeedbacks != null)
+{
+    <h3>Recent Feedbacks</h3>
+    <ul>
+        @foreach (var fb in ViewBag.RecentFeedbacks)
+        {
+            <li>@fb.Notes - @fb.FeedbackDate.ToShortDateString()</li>
+        }
+    </ul>
+}

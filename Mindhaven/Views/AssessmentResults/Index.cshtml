@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Mindhaven.Models.AssessmentResult>
+
+@{
+    ViewBag.Title = "Index";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+}
+
+<h2>Index</h2>
+<a href="/Support/HelpNow" class="btn btn-danger btn-sm float-right">
+    🆘 Need Help? Talk to Someone Now
+</a>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Score)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TakenAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Assessment.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TakenAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assessment.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                @if (isAdmin)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ResultID }) @:
+                    @Html.ActionLink("Details", "Details", new { id = item.ResultID }) @:
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ResultID })
+                }
+                else
+                {@Html.ActionLink("Details", "Details", new { id = item.ResultID })}
+            </td>
+        </tr>
+    }
+
+</table>

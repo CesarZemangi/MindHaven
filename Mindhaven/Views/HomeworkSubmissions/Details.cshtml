@@ -1,0 +1,68 @@
+﻿@model Mindhaven.Models.HomeworkSubmission
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HomeworkSubmission</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TextResponse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TextResponse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AudioPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AudioPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImagePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubmittedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubmittedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TherapeuticHomework.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TherapeuticHomework.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FullName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SubmissionId }) |
+    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Add Feedback", "Create", "TherapistFeedback", new { submissionId = Model.SubmissionId }, new { @class = "btn btn-primary btn-sm" })
+
+</p>

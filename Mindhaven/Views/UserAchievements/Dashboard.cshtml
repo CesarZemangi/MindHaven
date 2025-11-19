@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Mindhaven.ViewModels.UserAchievementViewModel>
+
+@{
+    var achievements = Model;
+    var leaderboard = ViewBag.Leaderboard as List<Mindhaven.ViewModels.LeaderboardViewModel>;
+}
+
+<h4>Your Achievements</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Achievement</th>
+            <th>Description</th>
+            <th>Points</th>
+            <th>Date Earned</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in achievements)
+        {
+            <tr>
+                <td>@a.AchievementName</td>
+                <td>@a.Description</td>
+                <td>@a.Points</td>
+                <td>@(a.DateEarned?.ToString("MMM dd, yyyy"))</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<h4>Leaderboard</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in leaderboard)
+        {
+        <tr>
+            <td>@item.UserFullName</td>
+            <td>@item.TotalPoints</td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Mindhaven.Models.Meditation>
+
+@{
+    ViewBag.Title = "Index";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+}
+
+
+<h2>Index</h2>
+<a href="/Support/HelpNow" class="btn btn-danger btn-sm float-right">
+    🆘 Need Help? Talk to Someone Now
+</a>
+
+@if (isAdmin)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediaURL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a href="@item.MediaURL" target="_blank">@item.MediaURL</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @if (isAdmin)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MeditationID }) @:
+                    @Html.ActionLink("Details", "Details", new { id = item.MeditationID }) @:
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MeditationID })
+
+
+                }
+                else
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.MeditationID }) @:
+
+
+                    @Html.ActionLink("Request Delete", "RequestDeletes", "DeleteRequests", new { itemType = "Meditation", itemId = item.MeditationID }, new { @class = "btn btn-warning" })
+
+
+                }
+
+            </td>
+        </tr>
+    }
+</table>

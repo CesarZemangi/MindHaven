@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Mindhaven.Models.AssessmentQuestion>
+
+@{
+    ViewBag.Title = "Index";
+
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
+}
+
+<h2>Index</h2>
+<a href="/Support/HelpNow" class="btn btn-danger btn-sm float-right">
+    🆘 Need Help? Talk to Someone Now
+</a>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Assessment.Title)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assessment.Title)
+            </td>
+            <td>
+                @if (isAdmin)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.QuestionID }) @:
+                    @Html.ActionLink("Details", "Details", new { id = item.QuestionID }) @:
+                    @Html.ActionLink("Delete", "Delete", new { id = item.QuestionID })
+
+                }
+                else
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.QuestionID })@:
+
+
+
+
+                    @Html.ActionLink("Request Delete", "DeleteRequest", "DeleteRequests", new { itemType = "AssessmentQuestion", itemId = item.QuestionID }, new { @class = "btn btn-warning btn-sm" })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Mindhaven.Models.Feedback>
+
+@{
+    ViewBag.Title = "Feedback Reports";
+}
+@{
+    var role = Session["Role"] != null ? Session["Role"].ToString() : "";
+    bool isAdmin = role == "Admin";
+    bool isTherapist = role == "Therapist";
+    bool isUser = role == "User";
+}
+
+<h2>Feedback Reports</h2>
+
+<div class="row mb-3">
+    <div class="col-md-3">
+        <form method="get">
+            <label>Filter by Status</label>
+            <select name="statusFilter" class="form-control" onchange="this.form.submit()">
+                <option value="">All</option>
+                <option value="Pending" @(Request["statusFilter"] == "Pending" ? "selected" : "")>Pending Review</option>
+                <option value="Reviewed" @(Request["statusFilter"] == "Reviewed" ? "selected" : "")>Reviewed</option>
+            </select>
+        </form>
+    </div>
+
+    <div class="col-md-3">
+        <form method="get">
+            <label>Filter by User</label>
+            @Html.DropDownList("userId", (SelectList)ViewBag.UserList, "All Users", new { @class = "form-control", onchange = "this.form.submit()" })
+        </form>
+    </div>
+</div>
+@using (Html.BeginForm("Index", "Feedback", FormMethod.Get))
+{
+    <select name="statusFilter" onchange="this.form.submit()">
+        <option value="">All</option>
+        <option value="Pending" @(ViewBag.StatusFilter == "Pending" ? "selected" : "")>Pending</option>
+        <option value="Reviewed" @(ViewBag.StatusFilter == "Reviewed" ? "selected" : "")>Reviewed</option>
+    </select>
+}
+
+<a href="@Url.Action("ExportFeedbackReport", "Feedback", new { statusFilter = ViewBag.StatusFilter })"
+   class="btn btn-primary">Download PDF Report</a>
+
+
+<div class="alert alert-info mt-3">
+    <strong>Total:</strong> @ViewBag.TotalFeedback |
+    <strong>Reviewed:</strong> @ViewBag.ReviewedCount |
+    <strong>Pending:</strong> @ViewBag.PendingCount
+</div>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Homework</th>
+            <th>Date Submitted</th>
+            <th>Therapist Comment</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.User.FullName</td>
+                <td>
+                    @item.TherapeuticHomework
+                    Title
+                </td>
+
+                <td>@(item.SubmittedDate.HasValue ? item.SubmittedDate.Value.ToShortDateString() : "Not set")</td>
+
+                <td>@(string.IsNullOrEmpty(item.TherapistNotes) ? "Pending" : "Reviewed")</td>
+                <td>@Html.ActionLink("Details", "Details", new { id = item.FeedbackId })</td>
+            </tr>
+        }
+    </tbody>
+</table>

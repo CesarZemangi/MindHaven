@@ -1,0 +1,75 @@
+﻿@model Mindhaven.Models.MoodLog
+
+@{
+    ViewBag.Title = "Log Your Mood";
+}
+
+<h2>Log Your Mood</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @* Hide UserID — it will come from Session in the controller *@
+    @Html.HiddenFor(model => model.UserID)
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Mood Level (1 to 10)</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.MoodLevel, new { @class = "form-control", type = "number", min = "1", max = "10", placeholder = "Enter your mood level" })
+            @Html.ValidationMessageFor(model => model.MoodLevel, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Mood Note</label>
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.MoodNote, new { @class = "form-control", rows = "3", placeholder = "Describe how you feel today..." })
+            @Html.ValidationMessageFor(model => model.MoodNote, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label>
+            @Html.CheckBoxFor(model => model.IsShared)
+            Share with Care Team
+        </label>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Tag</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.MoodTag, new { @class = "form-control", placeholder = "Happy, Sad, Calm, Anxious..." })
+            @Html.ValidationMessageFor(model => model.MoodTag, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label>
+            @Html.CheckBoxFor(model => model.IsShared)
+            Share with Care Team
+        </label>
+    </div>
+
+
+    @* LoggedAt will be set in the controller, no need to show *@
+    @Html.HiddenFor(model => model.LoggedAt)
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save Mood" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to Mood List", "Index", null, new { @class = "btn btn-link" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

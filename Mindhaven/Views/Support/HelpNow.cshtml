@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Mindhaven.Models.EmergencyContact>
+
+@{
+    ViewBag.Title = "Help Now - Emergency Support";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .contact-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.5s ease;
+        transition: transform 0.2s ease;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .contact-header {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #2c3e50;
+    }
+
+    .contact-info {
+        font-size: 15px;
+        color: #555;
+    }
+
+    .contact-info i {
+        margin-right: 6px;
+        color: #007BFF;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<h2 class="text-center">🌍 Emergency Support Contacts</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p class="text-danger text-center">No emergency contacts available at the moment.</p>
+}
+else
+{
+    <div class="contact-grid">
+        @foreach (var contact in Model)
+        {
+            <div class="contact-card">
+                <div class="contact-header">
+                    @contact.OrganizationName <small>(@contact.Country)</small>
+                </div>
+                <div class="contact-info">
+                    <i class="glyphicon glyphicon-earphone"></i> @contact.PhoneNumber
+                </div>
+                @if (!string.IsNullOrWhiteSpace(contact.Website))
+                {
+                    <div class="contact-info">
+                        <i class="glyphicon glyphicon-globe"></i>
+                        <a href="@contact.Website" target="_blank">Visit Website</a>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(contact.Notes))
+                {
+                    <div class="contact-info">
+                        <i class="glyphicon glyphicon-info-sign"></i> @contact.Notes
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}

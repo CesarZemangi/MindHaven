@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Mindhaven.Models.DeleteRequest>
+@{
+    ViewBag.Title = "Delete Requests";
+}
+
+<h2 class="mb-4">Delete Requests</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<table class="table table-bordered table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Item Type</th>
+            <th>Item ID</th>
+            <th>Requested By</th>
+            <th>Request Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@request.ItemType</td>
+                <td>@request.ItemID</td>
+                <td>
+                    @(request.User != null
+                ? request.User.FullName
+                : $"User ID: {request.RequestedByUserID}")
+                </td>
+                <td>@(request.RequestDate?.ToString("g") ?? "N/A")</td>
+                <td>
+                    @if (request.Status == "Pending")
+                    {
+                        <span class="badge badge-warning">Pending</span>
+                    }
+                    else if (request.Status == "Approved")
+                    {
+                        <span class="badge badge-success">Approved</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Rejected</span>
+                    }
+                </td>
+                <td>
+                    @if (request.Status == "Pending")
+                    {
+                        @Html.ActionLink("Approve", "Approve", new { id = request.RequestID }, new { @class = "btn btn-sm btn-success", onclick = "return confirm('Approve this request?');" })
+                        @Html.Raw(" ")
+                        @Html.ActionLink("Reject", "Reject", new { id = request.RequestID }, new { @class = "btn btn-sm btn-danger", onclick = "return confirm('Reject this request?');" })
+                    }
+                    else
+                    {
+                        <span class="text-muted">No Action</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

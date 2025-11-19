@@ -1,0 +1,82 @@
+﻿@model Mindhaven.Models.Feedback
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Feedback</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ReflectionText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReflectionText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AudioFilePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AudioFilePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageFilePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageFilePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TherapistNotes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TherapistNotes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubmittedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubmittedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TherapeuticHomework.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TherapeuticHomework.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FullName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FeedbackId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Mindhaven.Models.UserActivity>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>User Activity Log</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Activity Description</th>
+            <th>Activity Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var activity in Model)
+        {
+            <tr>
+                <td>@activity.UserID</td>
+                <td>@activity.ActivityDescription</td>
+                <td>@activity.ActivityDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Graph Container -->
+<canvas id="activityChart" width="400" height="200"></canvas>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var ctx = document.getElementById('activityChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [@string.Join(",", Model.Select(a => "\"" + (a.ActivityDate?.ToShortDateString() ?? "N/A") + "\""))
+
+            datasets: [{
+                label: 'User Activities Count',
+                data: [@string.Join(",", Model.Select(a => "1"))], // counting each activity as 1
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+</script>

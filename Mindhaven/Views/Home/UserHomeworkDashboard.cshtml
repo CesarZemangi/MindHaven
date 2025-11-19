@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Mindhaven.Models.TherapeuticHomework>
+@{
+    ViewBag.Title = "My Therapeutic Homework";
+}
+
+<h2>My Therapeutic Homework</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hw in Model)
+        {
+            <tr>
+                <td>@hw.Title</td>
+                <td>@hw.Description</td>
+                <td>@hw.DueDate?.ToShortDateString()</td>
+                <td>@hw.Status</td>
+                <td>
+                    @Html.ActionLink("Submit Response", "Create", "HomeworkSubmissions", new { homeworkId = hw.HomeworkId }, new { @class = "btn btn-sm btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.MySubmissions != null)
+{
+    <h3>My Recent Submissions</h3>
+    <ul>
+        @foreach (var sub in ViewBag.MySubmissions)
+        {
+            <li>
+                Submitted on @sub.SubmittedDate.ToShortDateString()
+                @if (!string.IsNullOrEmpty(sub.TextResponse))
+                {
+                    <p>Text: @sub.TextResponse</p>
+                }
+                @if (!string.IsNullOrEmpty(sub.AudioPath))
+                {
+                    <audio controls src="@Url.Content(sub.AudioPath)"></audio>
+                }
+                @if (!string.IsNullOrEmpty(sub.ImagePath))
+                {
+                    <img src="@Url.Content(sub.ImagePath)" width="150" />
+                }
+            </li>
+        }
+    </ul>
+}

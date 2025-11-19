@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Mindhaven.Models.Note>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<h4>Add New Note</h4>
+<form method="post" action="@Url.Action("Create", "Notes")">
+    <textarea name="content" placeholder="Write your note here..." required style="width: 60%; height: 80px;"></textarea>
+    <br />
+    <button type="submit">Add Note</button>
+</form>
+
+<h4>Existing Notes</h4>
+<ul>
+    @foreach (var note in Model)
+    {
+        <li style="margin-bottom: 10px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+            <p>@note.Content</p>
+            <small>Created at: @note.CreatedAt?.ToString("dd MMM yyyy HH:mm")</small>
+            <form method="post" action="@Url.Action("Delete", "Notes")" style="display:inline;">
+                <input type="hidden" name="id" value="@note.NoteId" />
+                <button type="submit" style="margin-left:10px;">Delete</button>
+            </form>
+        </li>
+    }
+</ul>

@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Care Team Dashboard";
+}
+<h2>Care Team Dashboard</h2>
+
+<h3>Shared Journals</h3>
+<table class="table">
+    <tr><th>Title</th><th>Date</th><th>Note</th></tr>
+    @foreach (var item in ViewBag.SharedJournals)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.CreatedAt.ToShortDateString()</td>
+            <td>@item.Content</td>
+        </tr>
+    }
+</table>
+
+<h3>Shared Mood Logs</h3>
+<table class="table">
+    <tr><th>Mood</th><th>Tag</th><th>Date</th></tr>
+    @foreach (var item in ViewBag.SharedMoods)
+    {
+        <tr>
+            <td>@item.MoodLevel</td>
+            <td>@item.MoodTag</td>
+            <td>@item.LoggedAt?.ToShortDateString()</td>
+        </tr>
+    }
+</table>

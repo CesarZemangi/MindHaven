@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Mindhaven.Models.TherapistFeedback>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FeedbackDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HomeworkSubmission.TextResponse)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FeedbackDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HomeworkSubmission.TextResponse)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FullName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FeedbackId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FeedbackId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FeedbackId })
+        </td>
+    </tr>
+}
+
+</table>
