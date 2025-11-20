@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Mindhaven.Service
 {
     public class OpenAiChatService
     {
-        private readonly string apiKey = System.Configuration.ConfigurationManager.AppSettings["OpenAI_ApiKey"];
+        private readonly string apiKey= Environment.GetEnvironmentVariable("OpenAI_ApiKey");
         private readonly string apiUrl = "https://api.openai.com/v1/chat/completions";
 
         public async Task<string> GetResponseAsync(string userMessage)
