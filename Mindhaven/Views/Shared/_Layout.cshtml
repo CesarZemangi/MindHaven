@@ -22,6 +22,7 @@
     <link href="~/Template/css/style.css" rel="stylesheet">
 
     @*<link href="~/Template/css/plugins/datatables/datatables.min.css" rel="stylesheet">*@
+    @RenderSection("Styles", required: false)
 
 </head>
 <body>
@@ -88,20 +89,17 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="users.html"><i class="fa fa-user"></i> <span class="nav-label">Users</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        @if (Session["Role"] != null && Session["Role"].ToString() == "Admin")
-                        {
+                @if (Session["Role"] != null && Session["Role"].ToString() == "Admin")
+                {
+                    <li>
+                        <a href="users.html"><i class="fa fa-user"></i> <span class="nav-label">Users</span></a>
+                        <ul class="nav nav-second-level">
                             <li><a href="~/Users/Create">Add New User</a></li>
                             <li><a href="~/Users/Index">Manage Users & Roles</a></li>
                             <li><a href="~/UserActivities/Index">User Activity Log</a></li>
-                        }
-
-                        <li><a href="~/Users/Index">User List</a></li>
-
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
+                }
 
                 <li>
                     <a href="#"><i class="fa fa-calendar-check"></i> <span class="nav-label">Therapy</span> <span class="fa arrow"></span></a>
@@ -181,12 +179,12 @@
                     </ul>
                 </li>
                 <li>
-                @if (Session["UserId"] != null && ViewBag.HasPendingReminder == true)
-                {
-                    <div class="alert alert-info text-center">
-                        How are you feeling today? <a href="/MoodLogs/Create">Log your mood</a>
-                    </div>
-                }
+                    @if (Session["UserId"] != null && ViewBag.HasPendingReminder == true)
+                    {
+                        <div class="alert alert-info text-center">
+                            How are you feeling today? <a href="/MoodLogs/Create">Log your mood</a>
+                        </div>
+                    }
                 </li>
 
                 <li>@Html.ActionLink("Therapeutic Homework", "HomeworkDashboard", "Home")</li>
@@ -421,7 +419,7 @@
         });
     </script>
 
-   
+
     <!-- 🌿 MindHaven Chatbot Widget (Compact Version) -->
     <div id="chatbotWidget">
         <!-- Floating Chat Button -->
@@ -518,15 +516,15 @@
             if (role === 'user') {
                 msgDiv.style.textAlign = 'right';
                 msgDiv.innerHTML = `<div style="display:inline-block; background:#6ba8ff;
-                                            color:#0a2647; padding:6px 10px;
-                                            border-radius:12px 12px 0 12px;
-                                            max-width:80%;">${text}</div>`;
+                                                color:#0a2647; padding:6px 10px;
+                                                border-radius:12px 12px 0 12px;
+                                                max-width:80%;">${text}</div>`;
             } else {
                 msgDiv.style.textAlign = 'left';
                 msgDiv.innerHTML = `<div style="display:inline-block; background:#1e3d6b;
-                                            color:#e4f1ff; padding:6px 10px;
-                                            border-radius:12px 12px 12px 0;
-                                            max-width:80%;">${text}</div>`;
+                                                color:#e4f1ff; padding:6px 10px;
+                                                border-radius:12px 12px 12px 0;
+                                                max-width:80%;">${text}</div>`;
             }
 
             chatBox.appendChild(msgDiv);
@@ -590,6 +588,7 @@
 
 
     @RenderSection("Scripts", required: false)
+
 
 </body>
 

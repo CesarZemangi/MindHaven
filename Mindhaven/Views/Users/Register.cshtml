@@ -1,56 +1,133 @@
 ﻿@model Mindhaven.Models.User
 
-
 @{
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_AuthLayout.cshtml";
 }
 
-<h2>Register</h2>
+<div class="auth-container">
+    <div class="auth-card animate-in">
 
-@using (Html.BeginForm("Register", "Users", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    
-}
-
-
-<div class="form-horizontal">
-    <hr />
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.FullName)
+        <div class="auth-header">
+            <h2>Register</h2>
+            <div style="font-size:42px; text-align:center">🔐</div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Email)
-        </div>
-    </div>
+        @using (Html.BeginForm("Register", "Users", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
 
-    <div class="form-group">
-
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            @* Full Name *@
+            <div class="auth-field">
+                @Html.LabelFor(m => m.FullName)
+                @Html.TextBoxFor(m => m.FullName, new { @class = "auth-input", placeholder = "Enter your full name" })
+                @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-    </div>
+            @* Email *@
+            <div class="auth-field">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "auth-input", placeholder = "Enter your email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Register" class="btn btn-primary" />
+            @* Password *@
+            <div class="auth-field">
+                @Html.LabelFor(m => m.PasswordHash)
+                @Html.PasswordFor(m => m.PasswordHash, new { @class = "auth-input", placeholder = "Create a password" })
+                @Html.ValidationMessageFor(m => m.PasswordHash, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="auth-btn">Register</button>
+        }
+
+        <div class="auth-footer">
+            Already have an account?
+            <a href="~/Users/Login">Login</a>
         </div>
     </div>
 </div>
 
+
+@section Styles {
+    <style>
+
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .auth-card {
+            width: 380px;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            color: white;
+        }
+
+        .animate-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideIn 0.8s forwards;
+        }
+
+        @@keyframes fadeSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-header h2 {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .auth-field {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 4px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .auth-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            background: #007bff;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .auth-btn:hover {
+            background: #0066d1;
+        }
+
+        .auth-footer {
+            margin-top: 15px;
+            color: white;
+        }
+
+        .auth-footer a {
+            color: #80c3ff;
+            font-weight: bold;
+        }
+
+    </style>
+}
