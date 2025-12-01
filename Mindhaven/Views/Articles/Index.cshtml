@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
 <h2>Index</h2>
@@ -59,9 +61,20 @@
             @Html.DisplayFor(modelItem => item.User.FullName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ArticleId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ArticleId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ArticleId })
+            @if (isAdmin)
+            {
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.ArticleId }) @:
+                @Html.ActionLink("Details", "Details", new { id = item.ArticleId }) @:
+                @Html.ActionLink("Delete", "Delete", new { id = item.ArticleId })
+
+
+            }
+            else
+            {
+                @Html.ActionLink("Details", "Details", new { id = item.ArticleId }) 
+
+}
         </td>
     </tr>
 }
