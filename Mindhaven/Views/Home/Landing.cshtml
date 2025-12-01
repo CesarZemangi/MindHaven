@@ -1,5 +1,6 @@
 ﻿@model Mindhaven.ViewModels.LandingViewModel
 
+
 @{
     ViewBag.Title = "Mindhaven Landing Page";
 }
@@ -103,7 +104,7 @@
                     <div class="card">
                         @if (!string.IsNullOrEmpty(article.ImageUrl))
                         {
-                            <img class="card-img-top" src="@article.ImageUrl" alt="@article.Title" />
+                            <img class="card-img-top" src="~/template/img/@article.ImageUrl" alt="@article.Title" />
                         }
                         <div class="card-body">
                             <h5 class="card-title">@article.Title</h5>
@@ -179,7 +180,7 @@
     <div class="container">
         <h2>Resources Hub</h2>
         <div class="row">
-            @foreach (var resource in Model.Resources)
+            @foreach (var resource in Model.Resources1)
             {
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="resource-card card p-3">
@@ -192,8 +193,9 @@
                     </div>
                 </div>
             }
+            </div>>
+
         </div>
-    </div>
 </section>
 
 <!-- Newsletter -->

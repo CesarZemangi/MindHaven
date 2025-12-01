@@ -46,8 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>@item.AssignedDate?.ToShortDateString()</td>
-            <td>@(item.DueDate?.ToShortDateString())</td>
-            <td>
+            <td>@(item.DueDate.HasValue ? item.DueDate.Value.ToString("MMM dd, yyyy") : "")</td>            <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>

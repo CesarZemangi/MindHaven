@@ -22,7 +22,7 @@
                 <td>@a.AchievementName</td>
                 <td>@a.Description</td>
                 <td>@a.Points</td>
-                <td>@(a.DateEarned?.ToString("MMM dd, yyyy"))</td>
+                <td>@(a.DateEarned.HasValue ? a.DateEarned.Value.ToString("MMM dd, yyyy") : "")</td>
             </tr>
         }
 

@@ -65,10 +65,11 @@ namespace Mindhaven.Controllers
                     .Take(3)
                     .ToList(),
 
-                Resources = db.Resources
-                    .OrderByDescending(r => r.ResourceId) // Resources have no PublishedDate
-                    .Take(5)
-                    .ToList()
+                Resources1 = db.Resources1
+    .OrderByDescending(r => r.ResourceID) 
+    .Take(5)
+    .ToList()
+
             };
 
             return View(model); // Returns Landing.cshtml

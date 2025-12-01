@@ -207,6 +207,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AppointmentsController.cs" />
+    <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\AssessmentQuestionsController.cs" />
     <Compile Include="Controllers\AssessmentResultsController.cs" />
     <Compile Include="Controllers\AssessmentsController.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Controllers\MeditationsController.cs" />
     <Compile Include="Controllers\MoodLogsController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
+    <Compile Include="Controllers\Resource1Controller.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Controllers\SelfCareActivitiesController.cs" />
     <Compile Include="Controllers\SharedAccessesController.cs" />
@@ -576,7 +578,9 @@
     <Content Include="template\img\a7.jpg" />
     <Content Include="template\img\a8.jpg" />
     <Content Include="template\img\admin1.jpg" />
+    <Content Include="template\img\an.jpeg" />
     <Content Include="template\img\angular_logo.png" />
+    <Content Include="template\img\ba.jpeg" />
     <Content Include="template\img\dashboard4_1.jpg" />
     <Content Include="template\img\dashboard4_2.jpg" />
     <Content Include="template\img\email_1.jpg" />
@@ -1407,6 +1411,7 @@
     <Content Include="template\img\landing\perspective.png" />
     <Content Include="template\img\landing\shattered.png" />
     <Content Include="template\img\landing\word_map.png" />
+    <Content Include="template\img\ma.jpeg" />
     <Content Include="template\img\MD1.jpeg" />
     <Content Include="template\img\MD2.jpeg" />
     <Content Include="template\img\MD3.jpeg" />
@@ -1426,6 +1431,7 @@
     <Content Include="template\img\p6.jpg" />
     <Content Include="template\img\p7.jpg" />
     <Content Include="template\img\p8.jpg" />
+    <Content Include="template\img\pra.jpeg" />
     <Content Include="template\img\profile.jpg" />
     <Content Include="template\img\profile_big.jpg" />
     <Content Include="template\img\profile_small.jpg" />
@@ -1434,6 +1440,7 @@
     <Content Include="template\img\p_big3.jpg" />
     <Content Include="template\img\rails_logo.png" />
     <Content Include="template\img\starter_logo.jpg" />
+    <Content Include="template\img\te.jpeg" />
     <Content Include="template\img\zender_logo.png" />
     <Content Include="template\img\zimmag.jpeg" />
     <Content Include="template\js\bootstrap.js" />
@@ -2045,6 +2052,16 @@
     <Content Include="Views\Appointments\Details.cshtml" />
     <Content Include="Views\Appointments\Edit.cshtml" />
     <Content Include="Views\Appointments\Index.cshtml" />
+    <Content Include="Views\Resource1\Create.cshtml" />
+    <Content Include="Views\Resource1\Delete.cshtml" />
+    <Content Include="Views\Resource1\Details.cshtml" />
+    <Content Include="Views\Resource1\Edit.cshtml" />
+    <Content Include="Views\Resource1\Index.cshtml" />
+    <Content Include="Views\Articles\Create.cshtml" />
+    <Content Include="Views\Articles\Delete.cshtml" />
+    <Content Include="Views\Articles\Details.cshtml" />
+    <Content Include="Views\Articles\Edit.cshtml" />
+    <Content Include="Views\Articles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2125,11 +2142,9 @@
     <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
     <Error Condition="!Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
   </Target>
   <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

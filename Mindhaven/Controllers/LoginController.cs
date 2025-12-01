@@ -34,15 +34,13 @@ namespace Mindhaven.Controllers
             }
 
             password = Encrypt(password);
-
-            User u = null;
             foreach (User user in db.Users)
             {
                 if (username == user.Email && password == user.PasswordHash)
                 {
                     FormsAuthentication.SetAuthCookie(user.Email, false);
 
-                    u = db.Users.Find(user.UserID);
+                    User u = db.Users.Find(user.UserID);
                     Session["Email"] = user.Email;
                     Session["Role"] = user.Role;
                     Session["Name"] = user.FullName;
