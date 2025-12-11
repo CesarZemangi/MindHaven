@@ -68,6 +68,7 @@
 
                             </span>
                         </a>
+                        </ul>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
 
                             <li class="divider"></li>
@@ -131,7 +132,8 @@
                 <li>
                     <a href="#"><i class="fa fa-clipboard-list"></i> <span class="nav-label">Assessments</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="~/AssessmentResults/Available">Available Assessments</a></li>
+                        <li><a href="~/Assessments/Index">Available Assessments</a></li>
+
                         <li><a href="~/AssessmentResults/Index">My Results</a></li>
 
                         @if (Session["Role"] != null && Session["Role"].ToString() == "Admin")

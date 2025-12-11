@@ -3,7 +3,7 @@
 <h2>@Model.Assessment.Title</h2>
 <p>@Model.Assessment.Description</p>
 
-@using (Html.BeginForm("SubmitAssessment", "AssessmentResults", FormMethod.Post))
+using (Html.BeginForm("SubmitAssessment", "AssessmentResults", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Assessment.AssessmentID)

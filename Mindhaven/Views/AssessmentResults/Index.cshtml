@@ -1,61 +1,59 @@
-﻿@model IEnumerable<Mindhaven.Models.AssessmentResult>
+﻿@model IEnumerable<Mindhaven.ViewModels.AssessmentIndexViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Available Assessments";
     bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
 }
 
-<h2>Index</h2>
-<a href="/Support/HelpNow" class="btn btn-danger btn-sm float-right">
-    🆘 Need Help? Talk to Someone Now
-</a>
+<h2>Available Assessments</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Score)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TakenAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Assessment.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </th>
-        <th></th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status / Score</th>
+        <th>Actions</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
+            <td>@item.Title</td>
+            <td>@item.Description</td>
             <td>
-                @Html.DisplayFor(modelItem => item.Score)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TakenAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Assessment.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.FullName)
+                @if (item.Score.HasValue)
+                {
+                    <span>Score: @item.Score</span><br />
+                    <span>Taken: @item.TakenAt?.ToString("g")</span>
+                }
+                else
+                {
+                    <span>Not Taken</span>
+                }
             </td>
             <td>
                 @if (isAdmin)
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ResultID }) @:
-                    @Html.ActionLink("Details", "Details", new { id = item.ResultID }) @:
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ResultID })
+                    <a href="@Url.Action("Edit", "Assessments", new { id = item.AssessmentID })" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="@Url.Action("Details", "Assessments", new { id = item.AssessmentID })" class="btn btn-sm btn-info">Details</a>
+                    <a href="@Url.Action("Delete", "Assessments", new { id = item.AssessmentID })" class="btn btn-sm btn-danger">Delete</a>
                 }
                 else
-                {@Html.ActionLink("Details", "Details", new { id = item.ResultID })}
+                {
+                    if (!item.Score.HasValue)
+                    {
+                        <a href="@Url.Action("TakeAssessment", "AssessmentResults", new { assessmentId = item.AssessmentID })" class="btn btn-sm btn-success">
+                            Take Assessment
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index", "AssessmentResults")" class="btn btn-sm btn-warning">
+                            View My Result
+                        </a>
+                    }
+                }
             </td>
         </tr>
     }
-
 </table>

@@ -262,6 +262,7 @@
     <Compile Include="Models\Assessment.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AssessmentIndexViewModel.cs" />
     <Compile Include="Models\AssessmentQuestion.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>

@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Mindhaven.Models;
+using Mindhaven.ViewModels;
 
 namespace Mindhaven.Controllers
 {
@@ -23,25 +24,29 @@ namespace Mindhaven.Controllers
             bool isAdmin = (Session["Role"] != null && (string)Session["Role"] == "Admin");
             ViewBag.IsAdmin = isAdmin;
 
-            // Load assessments and user's result if available
             var assessments = db.Assessments
-                .Select(a => new
+                .Select(a => new AssessmentIndexViewModel
                 {
-                    a.AssessmentID,
-                    a.Title,
-                    a.Description,
-                    UserResult = userId != null
+                    AssessmentID = a.AssessmentID,
+                    Title = a.Title,
+                    Description = a.Description,
+                    Score = userId != null
                         ? db.AssessmentResults
                             .Where(r => r.AssessmentID == a.AssessmentID && r.UserID == userId)
-                            .Select(r => new { r.Score, r.TakenAt })
+                            .Select(r => (int?)r.Score)
+                            .FirstOrDefault()
+                        : null,
+                    TakenAt = userId != null
+                        ? db.AssessmentResults
+                            .Where(r => r.AssessmentID == a.AssessmentID && r.UserID == userId)
+                            .Select(r => (DateTime?)r.TakenAt)
                             .FirstOrDefault()
                         : null
-                })
-                .ToList();
+                }).ToList();
 
             return View(assessments);
         }
-  
+
 
         // GET: Assessments/Details/5
         public async Task<ActionResult> Details(int? id)

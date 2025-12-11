@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mindhaven.Models;
 using Newtonsoft.Json;
+using Mindhaven.ViewModels;
+
 
 namespace Mindhaven.Controllers
 {

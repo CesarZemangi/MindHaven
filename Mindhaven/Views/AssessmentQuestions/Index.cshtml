@@ -1,59 +1,59 @@
-﻿@model IEnumerable<dynamic>
+﻿@model IEnumerable<Mindhaven.Models.AssessmentQuestion>
 
 @{
-    ViewBag.Title = "Available Assessments";
+    ViewBag.Title = "Index";
+
     bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
-<h2>Available Assessments</h2>
+<h2>Index</h2>
+<a href="/Support/HelpNow" class="btn btn-danger btn-sm float-right">
+    🆘 Need Help? Talk to Someone Now
+</a>
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Status / Score</th>
-        <th>Action</th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Assessment.Title)
+        </th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.Title</td>
-            <td>@item.Description</td>
             <td>
-                @if (item.UserResult != null)
-                {
-                    <span>Score: @item.UserResult.Score</span><br />
-                    <span>Taken: @item.UserResult.TakenAt.ToString("g")</span>
-                }
-                else
-                {
-                    <span>Not Taken</span>
-                }
+                @Html.DisplayFor(modelItem => item.QuestionText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assessment.Title)
             </td>
             <td>
                 @if (isAdmin)
                 {
-                    <a href="~/Assessments/Edit/@item.AssessmentID" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="~/Assessments/Details/@item.AssessmentID" class="btn btn-sm btn-info">Details</a>
-                    <a href="~/Assessments/Delete/@item.AssessmentID" class="btn btn-sm btn-danger">Delete</a>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.QuestionID }) @:
+                    @Html.ActionLink("Details", "Details", new { id = item.QuestionID }) @:
+                    @Html.ActionLink("Delete", "Delete", new { id = item.QuestionID })
+
                 }
                 else
                 {
-                    if (item.UserResult == null)
-                    {
-                        <a href="~/AssessmentResults/TakeAssessment?assessmentId=@item.AssessmentID" class="btn btn-sm btn-success">
-                            Take Assessment
-                        </a>
-                    }
-                    else
-                    {
-                        <a href="~/AssessmentResults/Index" class="btn btn-sm btn-warning">
-                            View My Result
-                        </a>
-                    }
+                    @Html.ActionLink("Details", "Details", new { id = item.QuestionID })@:
+
+
+
+
+                    @Html.ActionLink("Request Delete", "DeleteRequest", "DeleteRequests", new { itemType = "AssessmentQuestion", itemId = item.QuestionID }, new { @class = "btn btn-warning btn-sm" })
                 }
             </td>
         </tr>
     }
+
 </table>
