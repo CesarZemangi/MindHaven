@@ -2,6 +2,11 @@
 
 @{
     ViewBag.Title = "Index";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+    
+
+
+
 }
 
 <h2>Index</h2>
@@ -29,29 +34,37 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BadgeType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ConditionType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequiredCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IconPath)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BadgeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BadgeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BadgeId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BadgeType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConditionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequiredCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IconPath)
+            </td>
+            <td>
+                @if (isAdmin)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BadgeId }) @:
+                    @Html.ActionLink("Details", "Details", new { id = item.BadgeId }) @:
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BadgeId })
+                }
+                else
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.BadgeId }) @:
+                }
+            </td>
+        </tr>
+    }
 
 </table>

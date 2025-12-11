@@ -1,0 +1,45 @@
+﻿@model Mindhaven.Models.TakeAssessmentViewModel
+
+<h2>@Model.Assessment.Title</h2>
+<p>@Model.Assessment.Description</p>
+
+@using (Html.BeginForm("SubmitAssessment", "AssessmentResults", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Assessment.AssessmentID)
+    @Html.HiddenFor(m => m.UserID)
+
+    @foreach (var q in Model.Questions)
+    {
+        <div class="question-block mb-3">
+            <label><strong>@q.QuestionText</strong></label>
+
+            @if (q.QuestionType == "Text")
+            {
+                <input type="text" name="question_@q.QuestionID" class="form-control" />
+            }
+            else if (q.QuestionType == "Radio" || q.QuestionType == "MCQ")
+            {
+                foreach (var opt in q.ParsedOptions)
+                {
+                    <div class="form-check">
+                        <input type="radio" name="question_@q.QuestionID" value="@opt" class="form-check-input" />
+                        <label class="form-check-label">@opt</label>
+                    </div>
+                }
+            }
+            else if (q.QuestionType == "Checkbox")
+            {
+                foreach (var opt in q.ParsedOptions)
+                {
+                    <div class="form-check">
+                        <input type="checkbox" name="question_@q.QuestionID" value="@opt" class="form-check-input" />
+                        <label class="form-check-label">@opt</label>
+                    </div>
+                }
+            }
+        </div>
+    }
+
+    <button type="submit" class="btn btn-success mt-2">Submit Assessment</button>
+}

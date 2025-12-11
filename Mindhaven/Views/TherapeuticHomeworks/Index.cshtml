@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
 <h2>Index</h2>
@@ -56,11 +58,19 @@
                 @Html.DisplayFor(modelItem => item.User1.FullName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.HomeworkId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.HomeworkId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.HomeworkId })
-                @Html.ActionLink("Submit Homework", "Create", "HomeworkSubmissions", new { homeworkId = item.HomeworkId }, new { @class = "btn btn-success btn-sm" })
+                @if (isAdmin)
+                {
 
+                    @Html.ActionLink("Edit", "Edit", new { id = item.HomeworkId }) @:
+                    @Html.ActionLink("Details", "Details", new { id = item.HomeworkId }) @:
+                    @Html.ActionLink("Delete", "Delete", new { id = item.HomeworkId })
+                    @Html.ActionLink("Submit Homework", "Create", "HomeworkSubmissions", new { homeworkId = item.HomeworkId }, new { @class = "btn btn-success btn-sm" })
+                }
+                else
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.HomeworkId }) @:
+                    @Html.ActionLink("Submit Homework", "Create", "HomeworkSubmissions", new { homeworkId = item.HomeworkId }, new { @class = "btn btn-success btn-sm" })
+                }
             </td>
         </tr>
     }

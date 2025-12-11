@@ -11,129 +11,112 @@ using Mindhaven.Models;
 
 namespace Mindhaven.Controllers
 {
-    [Authorize]
-    public class AssessmentsController : Controller
+    public class CaseStudiesController : Controller
     {
         private readonly mindhavenDBEntities1 db = new mindhavenDBEntities1();
 
-        // GET: Assessments
-        public ActionResult Index()
+        // GET: CaseStudies
+        public async Task<ActionResult> Index()
         {
-            int? userId = (int?)Session["UserID"];
-            bool isAdmin = (Session["Role"] != null && (string)Session["Role"] == "Admin");
-            ViewBag.IsAdmin = isAdmin;
-
-            // Load assessments and user's result if available
-            var assessments = db.Assessments
-                .Select(a => new
-                {
-                    a.AssessmentID,
-                    a.Title,
-                    a.Description,
-                    UserResult = userId != null
-                        ? db.AssessmentResults
-                            .Where(r => r.AssessmentID == a.AssessmentID && r.UserID == userId)
-                            .Select(r => new { r.Score, r.TakenAt })
-                            .FirstOrDefault()
-                        : null
-                })
-                .ToList();
-
-            return View(assessments);
+            var caseStudies = db.CaseStudies.Include(c => c.User);
+            return View(await caseStudies.ToListAsync());
         }
-  
 
-        // GET: Assessments/Details/5
+        // GET: CaseStudies/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assessment assessment = await db.Assessments.FindAsync(id);
-            if (assessment == null)
+            CaseStudy caseStudy = await db.CaseStudies.FindAsync(id);
+            if (caseStudy == null)
             {
                 return HttpNotFound();
             }
-            return View(assessment);
+            return View(caseStudy);
         }
 
-        // GET: Assessments/Create
+        // GET: CaseStudies/Create
         public ActionResult Create()
         {
+            ViewBag.AuthorId = new SelectList(db.Users, "UserID", "FullName");
             return View();
         }
 
-        // POST: Assessments/Create
+        // POST: CaseStudies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "AssessmentID,Title,Description")] Assessment assessment)
+        public async Task<ActionResult> Create([Bind(Include = "CaseStudyId,Title,Summary,Content,ImageUrl,PublishedDate,AuthorId")] CaseStudy caseStudy)
         {
             if (ModelState.IsValid)
             {
-                db.Assessments.Add(assessment);
+                db.CaseStudies.Add(caseStudy);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(assessment);
+            ViewBag.AuthorId = new SelectList(db.Users, "UserID", "FullName", caseStudy.AuthorId);
+            return View(caseStudy);
         }
 
-        // GET: Assessments/Edit/5
+        // GET: CaseStudies/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assessment assessment = await db.Assessments.FindAsync(id);
-            if (assessment == null)
+            CaseStudy caseStudy = await db.CaseStudies.FindAsync(id);
+            if (caseStudy == null)
             {
                 return HttpNotFound();
             }
-            return View(assessment);
+            ViewBag.AuthorId = new SelectList(db.Users, "UserID", "FullName", caseStudy.AuthorId);
+            return View(caseStudy);
         }
 
-        // POST: Assessments/Edit/5
+        // POST: CaseStudies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "AssessmentID,Title,Description")] Assessment assessment)
+        public async Task<ActionResult> Edit([Bind(Include = "CaseStudyId,Title,Summary,Content,ImageUrl,PublishedDate,AuthorId")] CaseStudy caseStudy)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(assessment).State = EntityState.Modified;
+                db.Entry(caseStudy).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(assessment);
+            ViewBag.AuthorId = new SelectList(db.Users, "UserID", "FullName", caseStudy.AuthorId);
+            return View(caseStudy);
         }
 
-        // GET: Assessments/Delete/5
+        // GET: CaseStudies/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assessment assessment = await db.Assessments.FindAsync(id);
-            if (assessment == null)
+            CaseStudy caseStudy = await db.CaseStudies.FindAsync(id);
+            if (caseStudy == null)
             {
                 return HttpNotFound();
             }
-            return View(assessment);
+            return View(caseStudy);
         }
 
-        // POST: Assessments/Delete/5
+        // POST: CaseStudies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Assessment assessment = await db.Assessments.FindAsync(id);
-            db.Assessments.Remove(assessment);
+            CaseStudy caseStudy = await db.CaseStudies.FindAsync(id);
+            db.CaseStudies.Remove(caseStudy);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

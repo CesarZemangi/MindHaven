@@ -2,7 +2,15 @@
 
 @{
     ViewBag.Title = "Index";
+
 }
+@{
+    var role = Session["Role"] != null ? Session["Role"].ToString() : "";
+    bool isAdmin = role == "Admin";
+    bool isTherapist = role == "Therapist";
+    bool isUser = role == "User";
+}
+
 
 <h2>Index</h2>
 <a href="/Support/HelpNow" class="btn btn-danger btn-sm float-right">
@@ -45,9 +53,13 @@
                 @Html.DisplayFor(modelItem => item.User.FullName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.TherapistID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.TherapistID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.TherapistID })
+                @if (isAdmin || isTherapist)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TherapistID }) @:
+                    @Html.ActionLink("Details", "Details", new { id = item.TherapistID }) @:
+                    @Html.ActionLink("Delete", "Delete", new { id = item.TherapistID })
+                }
+
             </td>
         </tr>
     }

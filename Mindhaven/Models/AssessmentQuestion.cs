@@ -17,6 +17,8 @@ namespace Mindhaven.Models
         public int QuestionID { get; set; }
         public Nullable<int> AssessmentID { get; set; }
         public string QuestionText { get; set; }
+        public string QuestionType { get; set; }
+        public string Options { get; set; }
     
         public virtual Assessment Assessment { get; set; }
     }

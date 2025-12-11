@@ -1,9 +1,9 @@
-﻿@model IEnumerable<Mindhaven.Models.Article>
+﻿@model IEnumerable<Mindhaven.Models.CaseStudy>
 
 @{
     ViewBag.Title = "Index";
     bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
-    
+
 }
 
 <h2>Index</h2>
@@ -24,9 +24,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ImageUrl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PublishedDate)
@@ -53,9 +50,6 @@
                 @Html.DisplayFor(modelItem => item.ImageUrl)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.PublishedDate)
             </td>
             <td>
@@ -65,16 +59,13 @@
                 @if (isAdmin)
                 {
 
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ArticleId }) @:
-                    @Html.ActionLink("Details", "Details", new { id = item.ArticleId }) @:
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ArticleId })
-
-
+                @Html.ActionLink("Edit", "Edit", new { id = item.CaseStudyId }) @:
+                @Html.ActionLink("Details", "Details", new { id = item.CaseStudyId }) @:
+                @Html.ActionLink("Delete", "Delete", new { id = item.CaseStudyId })
                 }
                 else
-                {
-                    @Html.ActionLink("Details", "Details", new { id = item.ArticleId })
-
+                { 
+                @Html.ActionLink("Details", "Details", new { id = item.CaseStudyId }) @:
                 }
             </td>
         </tr>

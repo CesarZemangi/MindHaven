@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Mindhaven.Models.Assessment>
 
+
 @{
     ViewBag.Title = "Index";
     bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
@@ -44,6 +45,8 @@
                 else
                 {
                     @Html.ActionLink("Details", "Details", new { id = item.AssessmentID }) @:
+
+
 
 
                     @Html.ActionLink("Request Delete", "Create", "DeleteRequests", new

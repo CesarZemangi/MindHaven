@@ -131,70 +131,69 @@
                 <li>
                     <a href="#"><i class="fa fa-clipboard-list"></i> <span class="nav-label">Assessments</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="~/Assessments/Index">Available Assessments</a></li>
+                        <li><a href="~/AssessmentResults/Available">Available Assessments</a></li>
                         <li><a href="~/AssessmentResults/Index">My Results</a></li>
+
                         @if (Session["Role"] != null && Session["Role"].ToString() == "Admin")
                         {
                             <li><a href="~/Assessments/Create">Add Assessment</a></li>
                             <li><a href="~/AssessmentQuestions/Index">Manage Questions</a></li>
                         }
 
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Support Groups</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="~/SupportGroups/Index">Browse Groups</a></li>
-                        <li><a href="~/GroupPosts/Index">Group Posts</a></li>
-                        @if (Session["Role"] != null && Session["Role"].ToString() == "Admin")
+                        <li>
+                            <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Support Groups</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="~/SupportGroups/Index">Browse Groups</a></li>
+                                <li><a href="~/GroupPosts/Index">Group Posts</a></li>
+                                @if (Session["Role"] != null && Session["Role"].ToString() == "Admin")
+                                {
+                                    <li><a href="~/SupportGroups/Create">Create Group</a></li>
+                                }
+                            </ul>
+                        </li>
+
+                        @if (Session["Role"] != null && (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Therapist"))
                         {
-                            <li><a href="~/SupportGroups/Create">Create Group</a></li>
+                            <li>
+                                <a href="#"><i class="fa fa-tools"></i> <span class="nav-label">Admin Panel</span> <span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    @if (Session["Role"].ToString() == "Admin")
+                                    {
+                                        <li><a href="~/Users/Index">Manage Users</a></li>
+                                    }
+                                    <li><a href="~/Therapists/Create">Add Therapist</a></li>
+                                    <li><a href="~/Meditations/Create">Add Meditation</a></li>
+                                    <li><a href="~/Resources/Create">Add Resource</a></li>
+                                    <li><a href="~/MeditationDeleteRequests/Index">Review Delete Requests</a></li> <!-- ✅ Add this -->
+                                    <li><a href="~/DeleteRequests/Index">Review Delete Requests</a></li>
+                                    <li>@Html.ActionLink("Emergency Contacts", "Index", "EmergencyContacts")</li>
+
+                                </ul>
+                            </li>
                         }
-                    </ul>
-                </li>
-
-                @if (Session["Role"] != null && (Session["Role"].ToString() == "Admin" || Session["Role"].ToString() == "Therapist"))
-                {
-                    <li>
-                        <a href="#"><i class="fa fa-tools"></i> <span class="nav-label">Admin Panel</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            @if (Session["Role"].ToString() == "Admin")
+                        <li>
+                            <a href="#"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Landing Page</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="~/Home/Landing">View Landing Page</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            @if (Session["UserId"] != null && ViewBag.HasPendingReminder == true)
                             {
-                                <li><a href="~/Users/Index">Manage Users</a></li>
+                                <div class="alert alert-info text-center">
+                                    How are you feeling today? <a href="/MoodLogs/Create">Log your mood</a>
+                                </div>
                             }
-                            <li><a href="~/Therapists/Create">Add Therapist</a></li>
-                            <li><a href="~/Meditations/Create">Add Meditation</a></li>
-                            <li><a href="~/Resources/Create">Add Resource</a></li>
-                            <li><a href="~/MeditationDeleteRequests/Index">Review Delete Requests</a></li> <!-- ✅ Add this -->
-                            <li><a href="~/DeleteRequests/Index">Review Delete Requests</a></li>
-                            <li>@Html.ActionLink("Emergency Contacts", "Index", "EmergencyContacts")</li>
+                        </li>
 
-                        </ul>
-                    </li>
-                }
-                <li>
-                    <a href="#"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Landing Page</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="~/Home/Landing">View Landing Page</a></li>
+                        <li>@Html.ActionLink("Therapeutic Homework", "HomeworkDashboard", "Home")</li>
+
+
+                        <li>
+                            <a href="~/Account/Logout"><i class="fa fa-sign-out-alt"></i> <span class="nav-label">Logout</span></a>
+                        </li>
+
                     </ul>
-                </li>
-                <li>
-                    @if (Session["UserId"] != null && ViewBag.HasPendingReminder == true)
-                    {
-                        <div class="alert alert-info text-center">
-                            How are you feeling today? <a href="/MoodLogs/Create">Log your mood</a>
-                        </div>
-                    }
-                </li>
-
-                <li>@Html.ActionLink("Therapeutic Homework", "HomeworkDashboard", "Home")</li>
-
-
-                <li>
-                    <a href="~/Account/Logout"><i class="fa fa-sign-out-alt"></i> <span class="nav-label">Logout</span></a>
-                </li>
-
-            </ul>
 
         </div>
     </nav>

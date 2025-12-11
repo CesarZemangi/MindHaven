@@ -213,6 +213,7 @@
     <Compile Include="Controllers\AssessmentsController.cs" />
     <Compile Include="Controllers\BadgeConfigsController.cs" />
     <Compile Include="Controllers\CareTeamController.cs" />
+    <Compile Include="Controllers\CaseStudiesController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CustomActivitiesController.cs" />
     <Compile Include="Controllers\DashboardViewModel.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Models\AssessmentQuestion.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssessmentQuestionExtensions.cs" />
     <Compile Include="Models\AssessmentResult.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
@@ -339,6 +341,7 @@
     <Compile Include="Models\SharedAccess.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssessmentResultExtensions.cs" />
     <Compile Include="Models\Subscriber.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
@@ -351,6 +354,7 @@
     <Compile Include="Models\Tag.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TakeAssessmentViewModel.cs" />
     <Compile Include="Models\TherapeuticHomework.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
@@ -2062,6 +2066,12 @@
     <Content Include="Views\Articles\Details.cshtml" />
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Articles\Index.cshtml" />
+    <Content Include="Views\CaseStudies\Create.cshtml" />
+    <Content Include="Views\CaseStudies\Delete.cshtml" />
+    <Content Include="Views\CaseStudies\Details.cshtml" />
+    <Content Include="Views\CaseStudies\Edit.cshtml" />
+    <Content Include="Views\CaseStudies\Index.cshtml" />
+    <Content Include="Views\AssessmentResults\TakeAssessment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

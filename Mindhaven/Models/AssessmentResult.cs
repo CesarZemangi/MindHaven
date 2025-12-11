@@ -19,6 +19,7 @@ namespace Mindhaven.Models
         public Nullable<int> AssessmentID { get; set; }
         public Nullable<int> Score { get; set; }
         public Nullable<System.DateTime> TakenAt { get; set; }
+        public string Answers { get; set; }
     
         public virtual Assessment Assessment { get; set; }
         public virtual User User { get; set; }

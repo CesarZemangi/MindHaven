@@ -48,6 +48,8 @@
     <Property Name="AssessmentID" Type="Int32" />
     <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Assessment" Relationship="Self.FK__Assessmen__Asses__440B1D61" FromRole="AssessmentQuestions" ToRole="Assessments" />
+    <Property Name="QuestionType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Options" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="AssessmentResult">
     <Key>
@@ -60,6 +62,7 @@
     <Property Name="TakenAt" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Assessment" Relationship="Self.FK__Assessmen__Asses__48CFD27E" FromRole="AssessmentResults" ToRole="Assessments" />
     <NavigationProperty Name="User" Relationship="Self.FK__Assessmen__UserI__47DBAE45" FromRole="AssessmentResults" ToRole="Users" />
+    <Property Name="Answers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Assessment">
     <Key>

@@ -32,9 +32,12 @@
                 <td>
                     @(request.User != null
                 ? request.User.FullName
-                : $"User ID: {request.RequestedByUserID}")
+                : string.Format("User ID: {0}", request.RequestedByUserID))
+
+
                 </td>
-                <td>@(request.RequestDate?.ToString("g") ?? "N/A")</td>
+                @(request.RequestDate == null ? "N/A" : request.RequestDate.Value.ToString("g"))
+
                 <td>
                     @if (request.Status == "Pending")
                     {

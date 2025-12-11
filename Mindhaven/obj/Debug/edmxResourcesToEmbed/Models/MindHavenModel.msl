@@ -42,6 +42,8 @@
     <EntitySetMapping Name="AssessmentQuestions">
       <EntityTypeMapping TypeName="mindhavenDBModel.AssessmentQuestion">
         <MappingFragment StoreEntitySet="AssessmentQuestions">
+          <ScalarProperty Name="Options" ColumnName="Options" />
+          <ScalarProperty Name="QuestionType" ColumnName="QuestionType" />
           <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
           <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />
           <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
@@ -51,6 +53,7 @@
     <EntitySetMapping Name="AssessmentResults">
       <EntityTypeMapping TypeName="mindhavenDBModel.AssessmentResult">
         <MappingFragment StoreEntitySet="AssessmentResults">
+          <ScalarProperty Name="Answers" ColumnName="Answers" />
           <ScalarProperty Name="ResultID" ColumnName="ResultID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />

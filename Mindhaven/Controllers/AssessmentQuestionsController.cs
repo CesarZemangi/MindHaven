@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Mindhaven.Models;
+using Newtonsoft.Json;
 
 namespace Mindhaven.Controllers
 {
@@ -28,14 +27,15 @@ namespace Mindhaven.Controllers
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AssessmentQuestion assessmentQuestion = await db.AssessmentQuestions.FindAsync(id);
+
+            var assessmentQuestion = await db.AssessmentQuestions.FindAsync(id);
             if (assessmentQuestion == null)
-            {
                 return HttpNotFound();
-            }
+
+            if (!string.IsNullOrEmpty(assessmentQuestion.Options))
+                assessmentQuestion.ParsedOptions = JsonConvert.DeserializeObject<List<string>>(assessmentQuestion.Options);
+
             return View(assessmentQuestion);
         }
 
@@ -47,11 +47,9 @@ namespace Mindhaven.Controllers
         }
 
         // POST: AssessmentQuestions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "QuestionID,AssessmentID,QuestionText")] AssessmentQuestion assessmentQuestion)
+        public async Task<ActionResult> Create([Bind(Include = "QuestionID,AssessmentID,QuestionText,QuestionType,Options")] AssessmentQuestion assessmentQuestion)
         {
             if (ModelState.IsValid)
             {
@@ -68,24 +66,20 @@ namespace Mindhaven.Controllers
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AssessmentQuestion assessmentQuestion = await db.AssessmentQuestions.FindAsync(id);
+
+            var assessmentQuestion = await db.AssessmentQuestions.FindAsync(id);
             if (assessmentQuestion == null)
-            {
                 return HttpNotFound();
-            }
+
             ViewBag.AssessmentID = new SelectList(db.Assessments, "AssessmentID", "Title", assessmentQuestion.AssessmentID);
             return View(assessmentQuestion);
         }
 
         // POST: AssessmentQuestions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "QuestionID,AssessmentID,QuestionText")] AssessmentQuestion assessmentQuestion)
+        public async Task<ActionResult> Edit([Bind(Include = "QuestionID,AssessmentID,QuestionText,QuestionType,Options")] AssessmentQuestion assessmentQuestion)
         {
             if (ModelState.IsValid)
             {
@@ -101,14 +95,12 @@ namespace Mindhaven.Controllers
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AssessmentQuestion assessmentQuestion = await db.AssessmentQuestions.FindAsync(id);
+
+            var assessmentQuestion = await db.AssessmentQuestions.FindAsync(id);
             if (assessmentQuestion == null)
-            {
                 return HttpNotFound();
-            }
+
             return View(assessmentQuestion);
         }
 
@@ -117,7 +109,7 @@ namespace Mindhaven.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            AssessmentQuestion assessmentQuestion = await db.AssessmentQuestions.FindAsync(id);
+            var assessmentQuestion = await db.AssessmentQuestions.FindAsync(id);
             db.AssessmentQuestions.Remove(assessmentQuestion);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -126,9 +118,7 @@ namespace Mindhaven.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

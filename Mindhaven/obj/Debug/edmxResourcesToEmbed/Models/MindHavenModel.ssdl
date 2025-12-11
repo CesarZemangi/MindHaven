@@ -59,6 +59,8 @@
     <Property Name="QuestionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="AssessmentID" Type="int" />
     <Property Name="QuestionText" Type="text" />
+    <Property Name="QuestionType" Type="varchar" MaxLength="20" />
+    <Property Name="Options" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="AssessmentResults">
     <Key>
@@ -69,6 +71,7 @@
     <Property Name="AssessmentID" Type="int" />
     <Property Name="Score" Type="int" />
     <Property Name="TakenAt" Type="datetime" />
+    <Property Name="Answers" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Assessments">
     <Key>
@@ -413,7 +416,9 @@
     <Property Name="OfflineStatus" Type="bit" />
   </EntityType>
   <Association Name="FK__Announcem__Autho__55F4C372">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Announcements" Type="Self.Announcements" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -437,7 +442,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Appointme__UserI__5441852A">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Appointments" Type="Self.Appointments" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -449,7 +456,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Articles__Author__5224328E">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Articles" Type="Self.Articles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -513,7 +522,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Assessmen__UserI__47DBAE45">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="AssessmentResults" Type="Self.AssessmentResults" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -525,7 +536,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__CaseStudi__Autho__59C55456">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="CaseStudies" Type="Self.CaseStudies" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -537,7 +550,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__DeleteReq__Reque__17F790F9">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="DeleteRequests" Type="Self.DeleteRequests" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -561,7 +576,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Feedback__UserId__0A688BB1">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -585,7 +602,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__GroupPost__UserI__5CD6CB2B">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="GroupPosts" Type="Self.GroupPosts" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -609,7 +628,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__MoodLogs__UserID__3F466844">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MoodLogs" Type="Self.MoodLogs" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -621,7 +642,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Resource__Author__5E8A0973">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Resource" Type="Self.Resource" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -633,7 +656,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__SharedAcc__UserI__22401542">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SharedAccess" Type="Self.SharedAccess" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -645,7 +670,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__Therapist__UserI__5070F446">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Therapists" Type="Self.Therapists" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -657,7 +684,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__UserActiv__UserI__70DDC3D8">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="UserActivities" Type="Self.UserActivities" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -669,7 +698,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_CustomActivity_User">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="CustomActivity" Type="Self.CustomActivity" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -693,7 +724,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_HomeworkSubmission_User">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="HomeworkSubmission" Type="Self.HomeworkSubmission" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -705,7 +738,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_JournalEntries_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="JournalEntries" Type="Self.JournalEntries" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -717,7 +752,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_MoodReminders_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="MoodReminders" Type="Self.MoodReminders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -729,7 +766,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_TherapeuticHomework_Therapist">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="TherapeuticHomework" Type="Self.TherapeuticHomework" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -737,18 +776,6 @@
       </Principal>
       <Dependent Role="TherapeuticHomework">
         <PropertyRef Name="TherapistId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TherapeuticHomework_User">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="TherapeuticHomework" Type="Self.TherapeuticHomework" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="UserID" />
-      </Principal>
-      <Dependent Role="TherapeuticHomework">
-        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -765,7 +792,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_TherapistFeedback_Therapist">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="TherapistFeedback" Type="Self.TherapistFeedback" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -815,7 +844,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserActivityLog_User">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="UserActivityLog" Type="Self.UserActivityLog" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
@@ -971,10 +1002,6 @@
       <End Role="MoodReminders" EntitySet="MoodReminders" />
     </AssociationSet>
     <AssociationSet Name="FK_TherapeuticHomework_Therapist" Association="Self.FK_TherapeuticHomework_Therapist">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="TherapeuticHomework" EntitySet="TherapeuticHomework" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TherapeuticHomework_User" Association="Self.FK_TherapeuticHomework_User">
       <End Role="Users" EntitySet="Users" />
       <End Role="TherapeuticHomework" EntitySet="TherapeuticHomework" />
     </AssociationSet>

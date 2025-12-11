@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Mindhaven.Models;
+using Newtonsoft.Json;
 
 namespace Mindhaven.Controllers
 {
@@ -16,123 +14,89 @@ namespace Mindhaven.Controllers
     {
         private readonly mindhavenDBEntities1 db = new mindhavenDBEntities1();
 
-        // GET: AssessmentResults
+        // List assessments available for the user
+        public ActionResult Available()
+        {
+            var assessments = db.Assessments.ToList();
+            return View(assessments);
+        }
+
+        // GET: TakeAssessment
+        public ActionResult TakeAssessment(int assessmentId)
+        {
+            int userId = (int)Session["UserID"];
+            var assessment = db.Assessments.Find(assessmentId);
+            if (assessment == null) return HttpNotFound();
+
+            var questions = db.AssessmentQuestions
+                              .Where(q => q.AssessmentID == assessmentId)
+                              .ToList();
+
+            foreach (var q in questions)
+            {
+                if (!string.IsNullOrEmpty(q.Options))
+                    q.ParsedOptions = JsonConvert.DeserializeObject<List<string>>(q.Options);
+            }
+
+            var model = new TakeAssessmentViewModel
+            {
+                UserID = userId,
+                Assessment = assessment,
+                Questions = questions
+            };
+
+            return View(model);
+        }
+
+        // POST: SubmitAssessment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SubmitAssessment(int UserID, int AssessmentID, FormCollection form)
+        {
+            var answers = new Dictionary<int, object>();
+
+            foreach (var key in form.AllKeys)
+            {
+                if (key.StartsWith("question_"))
+                {
+                    int questionId = int.Parse(key.Replace("question_", ""));
+                    var values = form.GetValues(key);
+
+                    if (values.Length > 1)
+                        answers[questionId] = values.ToList();
+                    else
+                        answers[questionId] = values[0];
+                }
+            }
+
+            var result = new AssessmentResult
+            {
+                UserID = UserID,
+                AssessmentID = AssessmentID,
+                Answers = JsonConvert.SerializeObject(answers),
+                TakenAt = DateTime.Now
+            };
+
+            db.AssessmentResults.Add(result);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        // Display user results
         public async Task<ActionResult> Index()
         {
-            ViewBag.IsAdmin = (Session["Role"] != null && Session["Role"].ToString() == "Admin");
-            var assessmentResults = db.AssessmentResults.Include(a => a.Assessment).Include(a => a.User);
-            return View(await assessmentResults.ToListAsync());
-        }
-
-        // GET: AssessmentResults/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AssessmentResult assessmentResult = await db.AssessmentResults.FindAsync(id);
-            if (assessmentResult == null)
-            {
-                return HttpNotFound();
-            }
-            return View(assessmentResult);
-        }
-
-        // GET: AssessmentResults/Create
-        public ActionResult Create()
-        {
-            ViewBag.AssessmentID = new SelectList(db.Assessments, "AssessmentID", "Title");
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName");
-            return View();
-        }
-
-        // POST: AssessmentResults/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ResultID,UserID,AssessmentID,Score,TakenAt")] AssessmentResult assessmentResult)
-        {
-            if (ModelState.IsValid)
-            {
-                db.AssessmentResults.Add(assessmentResult);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.AssessmentID = new SelectList(db.Assessments, "AssessmentID", "Title", assessmentResult.AssessmentID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName", assessmentResult.UserID);
-            return View(assessmentResult);
-        }
-
-        // GET: AssessmentResults/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AssessmentResult assessmentResult = await db.AssessmentResults.FindAsync(id);
-            if (assessmentResult == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.AssessmentID = new SelectList(db.Assessments, "AssessmentID", "Title", assessmentResult.AssessmentID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName", assessmentResult.UserID);
-            return View(assessmentResult);
-        }
-
-        // POST: AssessmentResults/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ResultID,UserID,AssessmentID,Score,TakenAt")] AssessmentResult assessmentResult)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(assessmentResult).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.AssessmentID = new SelectList(db.Assessments, "AssessmentID", "Title", assessmentResult.AssessmentID);
-            ViewBag.UserID = new SelectList(db.Users, "UserID", "FullName", assessmentResult.UserID);
-            return View(assessmentResult);
-        }
-
-        // GET: AssessmentResults/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AssessmentResult assessmentResult = await db.AssessmentResults.FindAsync(id);
-            if (assessmentResult == null)
-            {
-                return HttpNotFound();
-            }
-            return View(assessmentResult);
-        }
-
-        // POST: AssessmentResults/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            AssessmentResult assessmentResult = await db.AssessmentResults.FindAsync(id);
-            db.AssessmentResults.Remove(assessmentResult);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            int userId = (int)Session["UserID"];
+            var results = db.AssessmentResults
+                            .Include(a => a.Assessment)
+                            .Where(r => r.UserID == userId)
+                            .ToList();
+            return await Task.FromResult(View(results));
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
+            if (disposing) db.Dispose();
             base.Dispose(disposing);
         }
     }
