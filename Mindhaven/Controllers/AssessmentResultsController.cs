@@ -16,84 +16,28 @@ namespace Mindhaven.Controllers
     {
         private readonly mindhavenDBEntities1 db = new mindhavenDBEntities1();
 
-        // List assessments available for the user
-        public ActionResult Available()
+        public ActionResult Index()
         {
-            var assessments = db.Assessments.ToList();
-            return View(assessments);
-        }
+            var userObj = Session["UserID"];
+            if (userObj == null)
+                return RedirectToAction("Login", "Account");
 
-        // GET: TakeAssessment
-        public ActionResult TakeAssessment(int assessmentId)
-        {
-            int userId = (int)Session["UserID"];
-            var assessment = db.Assessments.Find(assessmentId);
-            if (assessment == null) return HttpNotFound();
+            int userId = Convert.ToInt32(userObj);
 
-            var questions = db.AssessmentQuestions
-                              .Where(q => q.AssessmentID == assessmentId)
-                              .ToList();
-
-            foreach (var q in questions)
-            {
-                if (!string.IsNullOrEmpty(q.Options))
-                    q.ParsedOptions = JsonConvert.DeserializeObject<List<string>>(q.Options);
-            }
-
-            var model = new TakeAssessmentViewModel
-            {
-                UserID = userId,
-                Assessment = assessment,
-                Questions = questions
-            };
-
-            return View(model);
-        }
-
-        // POST: SubmitAssessment
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SubmitAssessment(int UserID, int AssessmentID, FormCollection form)
-        {
-            var answers = new Dictionary<int, object>();
-
-            foreach (var key in form.AllKeys)
-            {
-                if (key.StartsWith("question_"))
-                {
-                    int questionId = int.Parse(key.Replace("question_", ""));
-                    var values = form.GetValues(key);
-
-                    if (values.Length > 1)
-                        answers[questionId] = values.ToList();
-                    else
-                        answers[questionId] = values[0];
-                }
-            }
-
-            var result = new AssessmentResult
-            {
-                UserID = UserID,
-                AssessmentID = AssessmentID,
-                Answers = JsonConvert.SerializeObject(answers),
-                TakenAt = DateTime.Now
-            };
-
-            db.AssessmentResults.Add(result);
-            await db.SaveChangesAsync();
-
-            return RedirectToAction("Index");
-        }
-
-        // Display user results
-        public async Task<ActionResult> Index()
-        {
-            int userId = (int)Session["UserID"];
             var results = db.AssessmentResults
-                            .Include(a => a.Assessment)
-                            .Where(r => r.UserID == userId)
-                            .ToList();
-            return await Task.FromResult(View(results));
+                .Where(r => r.UserID == userId)
+                .Select(r => new AssessmentIndexViewModel
+                {
+                    AssessmentID = r.Assessment.AssessmentID,
+                    Title = r.Assessment.Title,
+                    Description = r.Assessment.Description,
+                    Score = r.Score,
+                    TakenAt = r.TakenAt
+                })
+                .ToList();
+
+            ViewBag.IsAdmin = false;
+            return View(results);
         }
 
         protected override void Dispose(bool disposing)

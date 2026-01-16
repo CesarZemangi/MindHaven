@@ -1,0 +1,35 @@
+﻿@model Mindhaven.ViewModels.TakeAssessmentViewModel
+
+<h2>@Model.Title</h2>
+
+<form method="post" action="/Assessments/Start">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" name="AssessmentID" value="@Model.AssessmentID" />
+
+    @for (int i = 0; i < Model.Questions.Count; i++)
+    {
+        <div>
+            <p>@Model.Questions[i].Text</p>
+
+            <input type="hidden"
+                   name="Answers[@i].QuestionID"
+                   value="@Model.Questions[i].QuestionID" />
+
+            @for (int j = 0; j < Model.Questions[i].Options.Count; j++)
+            {
+                <label>
+                    <input type="radio"
+                           name="Answers[@i].SelectedOptionID"
+                           value="@Model.Questions[i].Options[j].OptionID"
+                           required />
+                    @Model.Questions[i].Options[j].Text
+                </label>
+                <br />
+            }
+        </div>
+        <hr />
+    }
+
+    <button type="submit">Submit Assessment</button>
+</form>

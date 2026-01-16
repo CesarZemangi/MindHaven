@@ -142,6 +142,49 @@ namespace Mindhaven.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+        // GET: Assessments/Start/5
+        [HttpGet]
+        public ActionResult Start(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            int assessmentId = id.Value;
+
+            var assessment = db.Assessments
+                .Include(a => a.AssessmentQuestions)
+                .FirstOrDefault(a => a.AssessmentID == assessmentId);
+
+            if (assessment == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            var vm = new TakeAssessmentViewModel
+            {
+                AssessmentID = assessment.AssessmentID,
+                Title = assessment.Title,
+                Questions = assessment.AssessmentQuestions.Select(q => new QuestionViewModel
+                {
+                    QuestionID = q.QuestionID,
+                    Text = q.QuestionText,
+                    Type = q.QuestionType,
+                    Options = q.Options
+                        .Split('|')
+                        .Select((text, index) => new OptionViewModel
+                        {
+                            OptionID = index + 1,
+                            Text = text
+                        }).ToList()
+                }).ToList(),
+                Answers = new List<AnswerViewModel>()
+            };
+
+            return View(vm);
+        }
 
         protected override void Dispose(bool disposing)
         {

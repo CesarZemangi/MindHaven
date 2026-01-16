@@ -24,7 +24,14 @@
                 @if (item.Score.HasValue)
                 {
                     <span>Score: @item.Score</span><br />
-                    <span>Taken: @item.TakenAt?.ToString("g")</span>
+                    <span>
+                        Taken:
+                        @(item.TakenAt == null
+        ? ""
+        : item.TakenAt.Value.ToString("g"))
+                    </span>
+
+
                 }
                 else
                 {

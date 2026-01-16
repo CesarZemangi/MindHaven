@@ -235,6 +235,7 @@
     <Compile Include="Controllers\SharedAccessesController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\SupportGroupsController.cs" />
+    <Compile Include="Controllers\TakeAssessmentController.cs" />
     <Compile Include="Controllers\TherapeuticHomeworksController.cs" />
     <Compile Include="Controllers\TherapistFeedbacksController.cs" />
     <Compile Include="Controllers\TherapistsController.cs" />
@@ -262,6 +263,7 @@
     <Compile Include="Models\Assessment.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\TakeAssessmentSubmitModel.cs" />
     <Compile Include="ViewModels\AssessmentIndexViewModel.cs" />
     <Compile Include="Models\AssessmentQuestion.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
@@ -355,7 +357,7 @@
     <Compile Include="Models\Tag.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TakeAssessmentViewModel.cs" />
+    <Compile Include="Models\ViewModels\TakeAssessmentViewModel.cs" />
     <Compile Include="Models\TherapeuticHomework.cs">
       <DependentUpon>MindHavenModel.tt</DependentUpon>
     </Compile>
@@ -2073,11 +2075,13 @@
     <Content Include="Views\CaseStudies\Edit.cshtml" />
     <Content Include="Views\CaseStudies\Index.cshtml" />
     <Content Include="Views\AssessmentResults\TakeAssessment.cshtml" />
+    <Content Include="Views\Assessments\Start.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Helpers\" />
     <Folder Include="Views\Settings\" />
+    <Folder Include="Views\TakeAssessment\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
