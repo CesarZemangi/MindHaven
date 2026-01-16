@@ -2076,6 +2076,7 @@
     <Content Include="Views\CaseStudies\Index.cshtml" />
     <Content Include="Views\AssessmentResults\TakeAssessment.cshtml" />
     <Content Include="Views\Assessments\Start.cshtml" />
+    <Content Include="Views\Articles\Read.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -36,6 +36,24 @@ namespace Mindhaven.Controllers
             }
             return View(article);
         }
+        // GET: Articles/Read/5
+        public async Task<ActionResult> Read(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var article = await db.Articles.FindAsync(id);
+            if (article == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.ReturnUrl = Url.Action("Index", "Home");
+            return View(article);
+        }
+
 
         // GET: Articles/Create
         public ActionResult Create()
