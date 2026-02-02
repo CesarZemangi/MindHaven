@@ -1,49 +1,32 @@
 ﻿@model Mindhaven.Models.Resource
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
 }
 
-<h2>Details</h2>
+<h2>@Model.Title</h2>
 
-<div>
-    <h4>Resource</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+<p>
+    <strong>Type:</strong> @Model.MediaType
+</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+<hr />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MediaType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MediaType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Link)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Link)
-        </dd>
-
-    </dl>
+<div style="font-size:16px; line-height:1.6;">
+    @Model.Content
 </div>
+
+<hr />
+
+@if (!string.IsNullOrEmpty(Model.Link))
+{
+    <p>
+        <a href="@Model.Link" target="_blank">Open Resource</a>
+    </p>
+}
+
+<hr />
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ResourceID }) |
     @Html.ActionLink("Back to List", "Index")

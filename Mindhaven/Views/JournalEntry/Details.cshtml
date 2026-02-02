@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Details";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
 <h2>Details</h2>
@@ -44,7 +46,14 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if (isAdmin)
+{
+    <span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </span>
+}
+else
+{
+    @Html.ActionLink("Back to List", "Index", "JournalEntry")
+}

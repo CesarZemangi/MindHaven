@@ -1,50 +1,41 @@
 ﻿@model Mindhaven.Models.UserAchievement
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Achievement";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
-<h2>Details</h2>
+<h2>Achievement</h2>
 
-<div>
-    <h4>UserAchievement</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BadgeType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BadgeType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateEarned)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateEarned)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Progress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Progress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AchievementId }) |
-    @Html.ActionLink("Back to List", "Index")
+    <strong>User:</strong> @Model.User.FullName
 </p>
+
+<p>
+    <strong>Date earned:</strong> @Model.DateEarned
+</p>
+
+<hr />
+
+<div style="font-size:20px;">
+    <strong>Badge:</strong> @Model.BadgeType
+</div>
+
+<p>
+    <strong>Progress:</strong> @Model.Progress
+</p>
+
+<hr />
+
+@if (isAdmin)
+{
+    <span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.AchievementId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </span>
+}
+else
+{
+    @Html.ActionLink("Back to List", "Index")
+}

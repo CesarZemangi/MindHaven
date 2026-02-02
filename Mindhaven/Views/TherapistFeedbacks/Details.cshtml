@@ -1,50 +1,51 @@
 ﻿@model Mindhaven.Models.TherapistFeedback
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Therapist Feedback";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
-<h2>Details</h2>
+<h2>Therapist Feedback</h2>
 
-<div>
-    <h4>TherapistFeedback</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FeedbackDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FeedbackDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeworkSubmission.TextResponse)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HomeworkSubmission.TextResponse)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.FeedbackId }) |
-    @Html.ActionLink("Back to List", "Index")
+    <strong>Given by:</strong> @Model.User.FullName
 </p>
+
+<p>
+    <strong>Date:</strong> @Model.FeedbackDate
+</p>
+
+<hr />
+
+<p>
+    <strong>Feedback Notes</strong>
+</p>
+
+<div style="font-size:16px; line-height:1.6;">
+    @Model.Notes
+</div>
+
+<hr />
+
+<p>
+    <strong>Related Submission</strong>
+</p>
+
+<div style="font-size:16px; line-height:1.6;">
+    @Model.HomeworkSubmission.TextResponse
+</div>
+
+<hr />
+
+@if (isAdmin)
+{
+    <span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.FeedbackId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </span>
+}
+else
+{
+    @Html.ActionLink("Back to List", "Index")
+}

@@ -1,34 +1,28 @@
 ﻿@model Mindhaven.Models.AssessmentQuestion
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Question Details";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
-<h2>Details</h2>
+<h3>@Model.Assessment.Title</h3>
 
-<div>
-    <h4>AssessmentQuestion</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.QuestionText)
-        </dt>
+<hr />
 
-        <dd>
-            @Html.DisplayFor(model => model.QuestionText)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Assessment.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Assessment.Title)
-        </dd>
-
-    </dl>
+<div style="font-size:18px; line-height:1.6;">
+    @Model.QuestionText
 </div>
-<p>
+
+<hr />
+@if (isAdmin) {
+    <span>
+
     @Html.ActionLink("Edit", "Edit", new { id = Model.QuestionID }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+        </span>
+}
+else
+{
+    @Html.ActionLink("Back to List", "Index")
+}

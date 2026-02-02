@@ -1,74 +1,49 @@
 ﻿@model Mindhaven.Models.TherapeuticHomework
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
-<h2>Details</h2>
+<h2>@Model.Title</h2>
 
-<div>
-    <h4>TherapeuticHomework</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AssignedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AssignedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DueDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DueDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User1.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User1.FullName)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.HomeworkId }) |
-    @Html.ActionLink("Back to List", "Index")
+    <strong>Status:</strong> @Model.Status
 </p>
+
+<p>
+    <strong>Assigned on:</strong> @Model.AssignedDate
+</p>
+
+<p>
+    <strong>Due date:</strong> @Model.DueDate
+</p>
+
+<p>
+    <strong>Assigned by:</strong> @Model.User1.FullName
+</p>
+
+<p>
+    <strong>Assigned to:</strong> @Model.User.FullName
+</p>
+
+<hr />
+
+<div style="font-size:16px; line-height:1.6;">
+    @Model.Description
+</div>
+
+<hr />
+
+@if (isAdmin)
+{
+    <span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.HomeworkId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </span>
+}
+else
+{
+    @Html.ActionLink("Back to List", "Index")
+}

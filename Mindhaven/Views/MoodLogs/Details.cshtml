@@ -1,58 +1,44 @@
-﻿@model Mindhaven.Models.MoodLog
+﻿@model Mindhaven.Models.Resource1
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
-<h2>Details</h2>
+<h2>@Model.Title</h2>
 
-<div>
-    <h4>MoodLog</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MoodLevel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoodLevel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoodNote)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoodNote)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoodTag)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoodTag)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LoggedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoggedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MoodID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <strong>Type:</strong> @Model.MediaType
 </p>
+
+<hr />
+
+<div style="font-size:16px; line-height:1.6;">
+    @Model.Content
+</div>
+
+<hr />
+
+@if (!string.IsNullOrEmpty(Model.Link))
+{
+    <p>
+        <a href="@Model.Link" target="_blank">Open Resource</a>
+    </p>
+}
+
+<hr />
+
+@if (isAdmin)
+{
+    <span>
+        }
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ResourceID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </span>
+}
+else
+{
+    @Html.ActionLink("Back to List", "Index")
+}
+

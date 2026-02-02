@@ -1,50 +1,37 @@
 ﻿@model Mindhaven.Models.AssessmentResult
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Assessment Result";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
-<h2>Details</h2>
+<h2>@Model.Assessment.Title</h2>
 
-<div>
-    <h4>AssessmentResult</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Score)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Score)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TakenAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TakenAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Assessment.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Assessment.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ResultID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <strong>Participant:</strong> @Model.User.FullName
 </p>
+
+<p>
+    <strong>Taken on:</strong> @Model.TakenAt
+</p>
+
+<hr />
+
+<div style="font-size:20px;">
+    <strong>Score:</strong> @Model.Score
+</div>
+
+<hr />
+
+@if (isAdmin)
+{
+    <span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ResultID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </span>
+}
+else
+{
+    @Html.ActionLink("Back to List", "Index")
+}

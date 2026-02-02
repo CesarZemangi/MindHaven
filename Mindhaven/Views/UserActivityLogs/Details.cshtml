@@ -1,50 +1,41 @@
 ﻿@model Mindhaven.Models.UserActivityLog
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Activity Log";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
+
 }
 
-<h2>Details</h2>
+<h2>@Model.SelfCareActivity.Title</h2>
 
-<div>
-    <h4>UserActivityLog</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CompletedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CompletedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SelfCareActivity.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SelfCareActivity.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.LogId }) |
-    @Html.ActionLink("Back to List", "Index")
+    <strong>User:</strong> @Model.User.FullName
 </p>
+
+<p>
+    <strong>Completed on:</strong> @Model.CompletedAt
+</p>
+
+<hr />
+
+<p>
+    <strong>Notes</strong>
+</p>
+
+<div style="font-size:16px; line-height:1.6;">
+    @Model.Notes
+</div>
+
+<hr />
+
+@if (isAdmin)
+{
+    <span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.LogId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </span>
+}
+else
+{
+    @Html.ActionLink("Back to List", "Index")
+}

@@ -1,50 +1,37 @@
 ﻿@model Mindhaven.Models.GroupPost
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Post Details";
+    bool isAdmin = ViewBag.IsAdmin != null && (bool)ViewBag.IsAdmin;
 }
 
-<h2>Details</h2>
+<h2>@Model.SupportGroup.Name</h2>
 
-<div>
-    <h4>GroupPost</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PostContent)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PostContent)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PostedAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PostedAt)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SupportGroup.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SupportGroup.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PostID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <strong>Posted by:</strong> @Model.User.FullName
 </p>
+
+<p>
+    <strong>Posted on:</strong> @Model.PostedAt
+</p>
+
+<hr />
+
+<div style="font-size:16px; line-height:1.6;">
+    @Model.PostContent
+</div>
+
+<hr />
+
+@if (isAdmin)
+{
+    <span>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.PostID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </span>
+}
+
+else
+{
+    @Html.ActionLink("Back to List", "Index")
+}
